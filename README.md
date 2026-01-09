@@ -49,3 +49,22 @@ The user assumes all responsibility for the validation of results and the approp
 
 ## 🏷️ Keywords
 `Remote Sensing` `Hyperspectral` `EnMAP` `PRISMA` `Atmospheric Correction` `6S Model` `Water Quality` `Inland Waters`
+
+## Scientific Communications (2025)
+
+The methodology and validation of the **6ABOS** pipeline have been presented and discussed in the following international scientific forums during 2025:
+
+### 🇩🇪 2nd EnMAP User Workshop
+*From Hyperspectral Data to Environmental Understanding* | April 2–4, 2025 | Munich, Germany.
+* **Oral/Poster:** *Assessment of EnMAP atmospheric correction in both oligotrophic and hypertrophic inland waters using 6S and in situ spectroscopy data.*
+    * **Authors:** **Gabriel Caballero**, X. Sòria-Perpinyà, B. Alvado, A. Ruiz-Verdú, J. Delegido & J. Moreno.
+
+### 🇧🇷 XXI Simposio Brasileiro de Sensoramento Remoto
+April 13–16, 2025 | Salvador de Bahia, Brazil.
+* **Technical Paper:** *Assessment of PRISMA atmospheric correction in hypertrophic inland waters using 6S and in situ spectroscopy data.*
+    * **Authors:** **G. Caballero**, X. Sòria-Perpinyà, B. Pérez-González, A. Ruíz-Verdú, J. Delegido & J.M. Moreno.
+
+### 🇩🇪 International Ocean Colour Science (IOCS) Meeting
+December 1–4, 2025 | Darmstadt, Germany.
+* **Key Communication:** *Optimising 6S-based atmospheric correction for PRISMA and EnMAP hyperspectral imagery over inland waters.*
+    * **Authors:** **Gabriel Rodrigo Caballero**, X. Sòria-Perpinyà, B. Alvado, A. Ruiz-Verdú, J. Delegido & J. Moreno.
