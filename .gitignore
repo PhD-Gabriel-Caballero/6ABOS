@@ -1,0 +1,13 @@
+# Heavy data files 
+data/raw/* 
+data/processed/* 
+*.he5 
+*.h5 
+*.tif 
+*.tiff 
+ 
+# Python environment 
+__pycache__/ 
+.ipynb_checkpoints/ 
+.venv/ 
+.env 
