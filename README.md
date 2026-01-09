@@ -1,26 +1,28 @@
 # 6ABOS: 6S-based Atmospheric Background Offset Subtraction
+<p align="center">
+  <img src="assets/6ABOS.png" alt="6ABOS Header" width="100%">
+</p>
 
 **6ABOS** is a novel, efficient, and generic atmospheric correction (AC) framework designed specifically for **aquatic remote sensing**. It leverages a radiative transfer modeling (RTM) approach based on the **6S (Second Simulation of the Satellite Signal in the Solar Spectrum)** model to retrieve accurate water surface reflectance from hyperspectral sensors.
 
-## 🌊 The Challenge
+## The Challenge
 In aquatic remote sensing, accurately retrieving water quality parameters (e.g., chlorophyll-a, turbidity, CDOM) is a significant challenge. Light interaction with both the atmosphere and the water column is complex, and for inland water bodies, the water-leaving signal is often extremely weak compared to the atmospheric contribution. Standard land-based AC methods frequently fail to capture the subtle spectral signatures required for aquatic analysis.
 
-## 🎯 Objectives
+## Objectives
 The objective of 6ABOS is to bridge the gap between complex RTMs and practical application by providing a method that is:
 * **Efficient:** Reducing the computational burden of traditional pixel-by-pixel inversions.
 * **Generic:** Applicable to various hyperspectral platforms, specifically validated for **Level 1 PRISMA and EnMAP** imagery.
 * **Simple:** Utilizing a streamlined RTM scheme that remains accessible while maintaining scientific rigor.
 
-## 🚀 Key Features
-* **6S Engine Integration:** Built upon the robust and gold-standard 6S radiative transfer model version 1.1.
+## Key Features
+* **6S Engine Integration:** Built upon the robust 6S radiative transfer model version 1.1.
 * **Multi-Sensor Support:** Optimized for the high spectral resolution of **PRISMA** and **EnMAP** missions.
 * **Aquatic-Centric Design:** Specifically tuned for inland water bodies where atmospheric background noise is a dominant factor.
-* **Background Mitigation:** Implements a specialized offset subtraction to isolate the water-leaving radiance from atmospheric interference.
+  
+## Methodology
+6ABOS implements a atmospheric background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system leverages simulated atmospheric parameters to solve the radiative transfer equation, enabling the conversion of Top-of-Atmosphere (TOA) radiance into Bottom-of-Atmosphere (BOA) reflectance.
 
-## 🛠 Methodology
-6ABOS implements a background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system calculates a refined offset that is subtracted from the Top-of-Atmosphere (TOA) signal to retrieve the Bottom-of-Atmosphere (BOA) reflectance.
-
-## 📁 Repository Structure
+## Repository Structure
 * `/src`: Core 6ABOS Python/R scripts.
 * `/data`: Example metadata and spectral response functions (SRF) for PRISMA/EnMAP.
 * `/docs`: Technical documentation and 6S compilation guides.
@@ -28,14 +30,17 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PhD-Gabriel-Caballero/6ABOS/blob/main/notebooks/EnMAP/6ABOS_EnMAP_AC_v1.2_Dic_2025.ipynb)
 
-## 🤝 Affiliation & Support
+## Affiliation & Support
 This project is developed at the **Laboratory for Earth Observation**, Universitat de València, within the framework of the **RESSBIO** project. 
 
 ## Authors
 For inquiries regarding collaboration or implementation for specific water quality monitoring projects, please contact the contributors.
-**Gabriel Caballero** - *Lead Developer* - [gabriel.caballero@uv.es](mailto:gabriel.caballero@uv.es)
+* **Gabriel Caballero** - *Lead Developer/Algorithm Design* - [gabriel.caballero@uv.es](mailto:gabriel.caballero@uv.es)
+* **Xavier Sòria Perpinyà** - *Scientific Contributor/Field Data & Bio-optical Modeling* 
+* **Bárbara Alvado Arranz** - *Scientific Contributor/Field Data & Bio-optical Modeling*
+* **Antonio Ruíz Verdú** - *Scientific Contributor/Field Data & Bio-optical Modeling* 
 
-## 🏷️ Keywords
+## Keywords
 `Remote Sensing` `Hyperspectral` `EnMAP` `PRISMA` `Atmospheric Correction` `6S Model` `Water Quality` `Inland Waters`
 
 ## Scientific Communications (2025)
@@ -61,10 +66,10 @@ December 1–4, 2025 | Darmstadt, Germany.
 [![View PDF](https://img.shields.io/badge/View_Document-PDF-red?logo=adobe-acrobat-reader&logoColor=white)](docs/GCaballero_IOCSM2025_poster.pdf)
 
 
-## 📄 License
+## License
 This project is licensed under the **MIT** License - see the LICENSE file for details.
 
-## ⚠️ Disclaimer
+## Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied. 6ABOS is a research tool developed for scientific purposes. While every effort has been made to ensure the accuracy of the 6S-based atmospheric correction scheme, the authors assume no liability for:
 
 1. **Data Accuracy:** Any errors or inaccuracies in the output reflectance values resulting from poor quality Level 1 input data, incorrect metadata, or extreme atmospheric conditions.
