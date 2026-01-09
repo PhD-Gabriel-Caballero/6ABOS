@@ -3,7 +3,7 @@
 
 # ## 6ABOS EnMAP Atmospheric Correction Code
 
-# In[1]:
+# In[3]:
 
 
 # Library:
@@ -38,7 +38,7 @@ from scipy.interpolate import interp1d
 from scipy.signal import savgol_filter
 
 
-# In[2]:
+# In[53]:
 
 
 # Configuration dictionary
@@ -57,10 +57,12 @@ conf = {"verbose":True,
         # Replace with the actual path to the EnMAP L1 folder
         "input_dir": r'D:\EnMAP_L1\Gironde_Estuary\ENMAP01-____L1C-DT0000119389_20250317T115538Z_002_V010502_20250328T205130Z',
         # Replace with the actual path to the EnMAP L2 folder (6ABOS)
-        "output_dir":'d:/6ABOS/'}
+        "output_dir":'d:/6ABOS/',
+        # Output: 1) Surface reflectance (output_rrs = False), 2) Remote sensing reflectance (output_rrs = True)
+        "output_rrs":False}
 
 
-# In[3]:
+# In[5]:
 
 
 # Google Earth Engine (GEE) Authentication & Initialization
@@ -85,7 +87,7 @@ if conf['GEE']:
 
 # ### Functions definition
 
-# In[4]:
+# In[6]:
 
 
 """
@@ -285,7 +287,7 @@ class Atmospheric():
     return AOT
 
 
-# In[5]:
+# In[7]:
 
 
 #
@@ -341,7 +343,7 @@ def parse_xml(xml_file):
   return scene_parameters
 
 
-# In[6]:
+# In[8]:
 
 
 #
@@ -378,7 +380,7 @@ def get_enmap_band_parameters(xml_file):
     return df
 
 
-# In[7]:
+# In[9]:
 
 
 def calculate_gaussian_srf(df_enmap, spectral_range):
@@ -408,7 +410,7 @@ def calculate_gaussian_srf(df_enmap, spectral_range):
     return df_srf
 
 
-# In[8]:
+# In[26]:
 
 
 def atmospheric_correction(toa_radiance,ac_params,earth_sun_d,tgas_threshold):
@@ -457,16 +459,20 @@ def atmospheric_correction(toa_radiance,ac_params,earth_sun_d,tgas_threshold):
         p_boa = np.full(toa_radiance.shape, np.nan)
               
     # Rrs Calcutaions
-    
     rrs = np.divide(p_boa, np.pi) # Calculate Rrs
         
     # Clean up edge cases (masking zeros or artifacts)
     #rrs[np.isnan(rrs)] = 0  
+    
+    # Convert variables to float 32 data format
+    rrs = rrs.astype(np.float32)
+    p_boa = p_boa.astype(np.float32)
+    l_toa_corrected = l_toa_corrected.astype(np.float32)
                           
     return rrs,p_boa, l_toa_corrected
 
 
-# In[9]:
+# In[11]:
 
 
 def save_enmap_cube_to_tiff(data_cube, output_path, reference_raster_path, metadata_df=None):
@@ -547,7 +553,7 @@ def save_enmap_cube_to_tiff(data_cube, output_path, reference_raster_path, metad
 
 # ### Metadata and atmospheric constituent preprocessing
 
-# In[10]:
+# In[12]:
 
 
 # Path to TOA data definition
@@ -566,7 +572,7 @@ if conf['verbose']:
     print('Metadata file: ',path_to_xml_metadata)
 
 
-# In[11]:
+# In[15]:
 
 
 # EnMAP metadata file reading
@@ -611,7 +617,7 @@ else:
         target_alt = 0.0
 
 
-# In[12]:
+# In[16]:
 
 
 #Ozone Column: {200-500, AUT}: ozone value in Dobson units, AUT: Automatic
@@ -658,7 +664,7 @@ if conf['verbose']:
 
 # ### 6S Radiative Transfer Model Execution
 
-# In[13]:
+# In[17]:
 
 
 # ENMAP
@@ -693,7 +699,7 @@ s.altitudes.set_target_custom_altitude(target_alt)  # The altitude of the target
 ###############################################################################################################
 
 
-# In[14]:
+# In[18]:
 
 
 # Getting EnMAP's spectral configuration
@@ -727,7 +733,7 @@ if conf['data plotting']:
     plt.grid(True, alpha=0.3) # Added for better visualization of band overlaps
 
 
-# In[ ]:
+# In[15]:
 
 
 # Running 6S for EnMAP Hyperspectral Bands 
@@ -774,7 +780,63 @@ for band_id in df_srf_final.index:
 print(f"Total bands processed: {len(dictionary_enmap_6s)}")
 
 
-# In[ ]:
+# In[22]:
+
+
+# Running 6S for EnMAP Hyperspectral Bands 
+
+# Initialize results container
+dictionary_enmap_6s = {}
+
+for band_id in df_srf_final.index:
+    
+    # Get the SRF values for the current band (all wavelengths in the range)
+    srf_values = df_srf_final.loc[band_id].values.tolist()
+    
+    # Define the wavelength range for 6S (Converting nm to micrometers)
+    start_wv = wv_min / 1000.0
+    end_wv = wv_max / 1000.0
+    
+    # Configure the 6S object with the custom Spectral Response Function
+    s.wavelength = Wavelength(start_wv, end_wv, srf_values)
+    
+    # Run the atmospheric simulation
+    s.run()
+    
+    # Extract and store the atmospheric parameters
+    # We include all terms required by the 6ABOS physical inversion formula
+    outputs = {
+        # 1. Geometry & Albedo
+        'spherical_albedo': s.outputs.spherical_albedo.total,
+        
+        # 2. Transmittances (Individual gases)
+        'ozone_transmittance_total': s.outputs.transmittance_ozone.total,
+        'water_transmittance_total': s.outputs.transmittance_water.total,
+        
+        # 3. Total Gaseous Transmittance (T_gT) - Product of all gas absorption
+        'total_gaseous_transmittance': s.outputs.transmittance_global_gas.total,
+        
+        # 4. Scattering Transmittances
+        'total_scattering_transmittance_upward': s.outputs.transmittance_total_scattering.upward,
+        'total_scattering_transmittance_downward': s.outputs.transmittance_total_scattering.downward,
+        
+        # 5. Radiance & Irradiance (Crucial for the TOA to BOA equation)
+        # We extract 'atmospheric_intrinsic_radiance' (L_path) 
+        'atmospheric_intrinsic_radiance': s.outputs.atmospheric_intrinsic_radiance,
+        'direct_solar_irradiance': s.outputs.direct_solar_irradiance,
+        'diffuse_solar_irradiance': s.outputs.diffuse_solar_irradiance
+    }
+        
+    # Save in the dictionary using the Band ID as key
+    dictionary_enmap_6s[str(band_id)] = outputs
+
+    if conf['verbose'] and int(band_id) % 20 == 0:
+        print(f"6S simulation completed for Band {band_id}")
+
+print(f"Total bands processed: {len(dictionary_enmap_6s)}")
+
+
+# In[23]:
 
 
 if conf['verbose']:
@@ -783,12 +845,11 @@ if conf['verbose']:
 
 # ### ATMOSPHERIC CORRECTION: TOA RADIANCE TO SURFACE REFLECTANCE
 
-# In[89]:
+# In[54]:
 
 
 # Initializing containers for atmospheric components and output products
-rrs_3d_array = []
-ltoa_3d_array = []
+sixabos_3d_array = []
 
 # Open the multi-band TIFF
 dataset = gdal.Open(path_to_toa_radiance, gdal.GA_ReadOnly)
@@ -888,12 +949,13 @@ else:
                 plt.tight_layout()
                 plt.show()
          
-        # Accumulating band-wise Rrs for 3D cube reconstruction
-        rrs_3d_array.append(rrs)
-        
-        # Accumulating band-wise L_TOA for 3D cube reconstruction
-        ltoa_3d_array.append(l_toa_corrected)
-    
+        if conf['output_rrs']:
+            # Accumulating band-wise Rrs for 3D cube reconstruction
+            sixabos_3d_array.append(rrs)
+        else:
+            # Accumulating band-wise surface reflectance for 3D cube reconstruction
+            sixabos_3d_array.append(p_boa)
+            
     # Clean up
     dataset = None
     band = None
@@ -901,33 +963,45 @@ else:
 print('End of data processing')
 
 # Convert the list of bands into a single 3D NumPy array (Hypercube)
-enmap_rrs_cube = np.stack(rrs_3d_array, axis=0)
-enmap_ltoa_cube = np.stack(ltoa_3d_array, axis=0)
-print(f"Final Data Cube Shape: {enmap_rrs_cube.shape}")
+sixabos_3d_cube = np.stack(sixabos_3d_array, axis=0)
+
+print(f"Final Data Cube Shape: {sixabos_3d_cube.shape}")
 
 
-# In[97]:
+# In[58]:
 
 
 if conf['data plotting']:
-    # Define the spectral windows for Water Vapor (H2O) absorption (nm)
-    # Standard atmospheric windows used in hyperspectral remote sensing
-    h2o_windows = [
-        (710, 735),   # WVP Band 1
-        (810, 840),   # WVP Band 2
-        (890, 990),   # Major WVP window
-        (1080, 1180), # Major WVP window
-        (1300, 1500), # Total absorption (SWIR)
-        (1750, 2000), # Total absorption (SWIR)
-        (2300, 2500)  # Edge of SWIR
-    ]
+    # RE-OPEN the LTOA dataset
+    temp_ds = gdal.Open(path_to_toa_radiance, gdal.GA_ReadOnly)
+    
+    if not temp_ds:
+        print("Error: Could not re-open dataset for plotting.")
+    else:
+        # Define the spectral windows for Water Vapor (H2O) absorption (nm)
+        h2o_windows = [
+            (710, 735), (810, 840), (890, 990), (1080, 1180), 
+            (1300, 1500), (1750, 2000), (2300, 2500)
+        ]
 
-    # Extract spectrum and wavelengths
-    x_coord, y_coord = 620, 450
-    pixel_spectrum = enmap_rrs_cube[:, y_coord, x_coord]
-    # New variable: Extracting TOA Radiance for the same pixel
-    pixel_ltoa = enmap_ltoa_cube[:, y_coord, x_coord] 
-    wavelengths = enmap_spectral_conf_df['wavelength_center'].values
+        # Extract spectrum and wavelengths
+        x_coord, y_coord = 620, 450
+        pixel_spectrum = sixabos_3d_cube[:, y_coord, x_coord]
+
+        # Extracting TOA Radiance directly from the temporary dataset
+        pixel_ltoa = []
+        for b in range(1, total_bands + 1):
+            band_obj = temp_ds.GetRasterBand(b)
+            # Read only a 1x1 window at the specific coordinate
+            # band_obj.ReadAsArray(x_offset, y_offset, x_size, y_size)
+            val = band_obj.ReadAsArray(x_coord, y_coord, 1, 1)[0, 0]
+            
+            gain = enmap_spectral_conf_df.iloc[b-1]['gain']
+            offset = enmap_spectral_conf_df.iloc[b-1]['offset']
+            pixel_ltoa.append(val * gain + offset)
+        
+        pixel_ltoa = np.array(pixel_ltoa)
+        wavelengths = enmap_spectral_conf_df['wavelength_center'].values
 
     # Plotting EnMAP Rrs
     plt.figure(figsize=(10, 6))
@@ -944,7 +1018,10 @@ if conf['data plotting']:
     # Scientific Styling
     plt.title(f'Spectral Integrity Check: Pixel ({x_coord}, {y_coord})', fontsize=18, fontweight='bold')
     plt.xlabel('Wavelength (nm)', fontsize=14)
-    plt.ylabel('Remote Sensing Reflectance ($sr^{-1}$)', fontsize=14)
+    if conf['output_rrs']:
+        plt.ylabel('Remote Sensing Reflectance ($sr^{-1}$)', fontsize=14)
+    else: 
+        plt.ylabel('Surface Reflectance', fontsize=14)
     plt.xlim(wv_min, wv_max)
     #plt.ylim(-0.0005, np.nanmax(pixel_spectrum) * 1.2) # Dynamic height
     plt.grid(True, which='both', alpha=0.2, linestyle='--')
@@ -962,7 +1039,11 @@ if conf['data plotting']:
     # --- Primary Y-Axis: Rrs ---
     # Plot the valid spectrum (filtering out NaNs for a continuous line where possible)
     line1, = ax1.plot(wavelengths, pixel_spectrum, color='black', lw=2, label='EnMAP $R_{rs}$')
-    ax1.set_ylabel('Remote Sensing Reflectance ($sr^{-1}$)', fontsize=14, color='black')
+    if conf['output_rrs']:
+        ax1.set_ylabel('Remote Sensing Reflectance ($sr^{-1}$)', fontsize=14, color='black')
+    else: 
+        ax1.set_ylabel('Surface Reflectance', fontsize=14, color='black')
+
     ax1.tick_params(axis='y', labelcolor='black')
 
     # --- Secondary Y-Axis: L_TOA ---
@@ -999,13 +1080,15 @@ if conf['data plotting']:
     plt.tight_layout()
     plt.show()
 
+    temp_ds = None
+
 
 # ### Raster file generation
 
-# In[86]:
+# In[59]:
 
 
-# Saving EnMAP rrs datacube as TIF 
+# Saving EnMAP datacube as TIF 
 output_directory = conf['output_dir']
 
 # Split the path into the directory and the filename
@@ -1014,16 +1097,25 @@ folder_path, full_filename = os.path.split(path_to_toa_radiance)
 # Split the filename into the name and the extension (.TIF)
 file_name, extension = os.path.splitext(full_filename)
 
-# Create the new filename by adding the suffix
-new_filename = f"{file_name}-rrs_6abos{extension}"
+# Define suffix based on the output type
+suffix = "-rrs_6abos" if conf['output_rrs'] else "-pboa_6abos"
+
+# Create the new filename and full output path
+new_filename = f"{file_name}{suffix}{extension}"
 path_to_rrs_output = os.path.join(output_directory, new_filename)
 
 if conf['verbose']:
     print(f"Input:  {path_to_toa_radiance}")
     print(f"Output: {path_to_rrs_output}")
 
+# Data storing logic
 if conf['data storing']:
-    save_enmap_cube_to_tiff(enmap_rrs_cube,path_to_rrs_output, path_to_toa_radiance, enmap_spectral_conf_df)
+    if conf['output_rrs']:
+        # Saving Remote Sensing Reflectance (Rrs)
+        save_enmap_cube_to_tiff(sixabos_3d_cube, path_to_rrs_output, path_to_toa_radiance, enmap_spectral_conf_df)
+    else:
+        # Saving Planar BOA Reflectance (PBOA)
+        save_enmap_cube_to_tiff(sixabos_3d_cube, path_to_rrs_output, path_to_toa_radiance, enmap_spectral_conf_df)
 
 
 # In[ ]:
