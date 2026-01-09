@@ -1,6 +1,6 @@
 # 6ABOS: 6S-based Atmospheric Background Offset Subtraction
 
-![Texto descriptivo de la imagen](assets/satellites_acquisition.jpg height="300") 
+<img src="assets/satellites_acquisition.jpg" height="300" alt="Satellite acquisition process">
 
 **6ABOS** is a novel, efficient, and generic atmospheric correction (AC) framework designed specifically for **aquatic remote sensing**. It leverages a radiative transfer modeling (RTM) approach based on the **6S (Second Simulation of the Satellite Signal in the Solar Spectrum)** model to retrieve accurate water surface reflectance from hyperspectral sensors.
 
