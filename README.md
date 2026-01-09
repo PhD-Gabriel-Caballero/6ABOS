@@ -26,6 +26,8 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 * `/docs`: Technical documentation and 6S compilation guides.
 * `/notebooks`: Tutorials on how to process a sample EnMAP tile.
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gcaba/6ABOS/blob/main/notebooks/your_notebook.ipynb)
+
 ## 🤝 Affiliation & Support
 This project is developed at the **Laboratory for Earth Observation**, Universitat de València, within the framework of the **RESSBIO** project. 
 
