@@ -35,18 +35,6 @@ This project is developed at the **Laboratory for Earth Observation**, Universit
 For inquiries regarding collaboration or implementation for specific water quality monitoring projects, please contact the contributors.
 **Gabriel Caballero** - *Lead Developer* - [gabriel.caballero@uv.es](mailto:gabriel.caballero@uv.es)
 
-## 📄 License
-This project is licensed under the **MIT** License - see the LICENSE file for details.
-
-## ⚠️ Disclaimer
-This software is provided "as is", without warranty of any kind, express or implied. 6ABOS is a research tool developed for scientific purposes. While every effort has been made to ensure the accuracy of the 6S-based atmospheric correction scheme, the authors assume no liability for:
-
-1. **Data Accuracy:** Any errors or inaccuracies in the output reflectance values resulting from poor quality Level 1 input data, incorrect metadata, or extreme atmospheric conditions.
-2. **Decision Making:** The use of 6ABOS outputs for critical decision-making, environmental policy, or commercial applications without independent ground-truth validation.
-3. **Software Stability:** Technical issues, bugs, or compatibility errors arising from the integration of the 6S radiative transfer engine or third-party dependencies.
-
-The user assumes all responsibility for the validation of results and the appropriate use of the atmospheric correction framework in their specific study area.
-
 ## 🏷️ Keywords
 `Remote Sensing` `Hyperspectral` `EnMAP` `PRISMA` `Atmospheric Correction` `6S Model` `Water Quality` `Inland Waters`
 
@@ -68,3 +56,17 @@ April 13–16, 2025 | Salvador de Bahia, Brazil.
 December 1–4, 2025 | Darmstadt, Germany.
 * **Key Communication:** *Optimising 6S-based atmospheric correction for PRISMA and EnMAP hyperspectral imagery over inland waters.*
     * **Authors:** **Gabriel Rodrigo Caballero**, X. Sòria-Perpinyà, B. Alvado, A. Ruiz-Verdú, J. Delegido & J. Moreno.
+
+
+## 📄 License
+This project is licensed under the **MIT** License - see the LICENSE file for details.
+
+## ⚠️ Disclaimer
+This software is provided "as is", without warranty of any kind, express or implied. 6ABOS is a research tool developed for scientific purposes. While every effort has been made to ensure the accuracy of the 6S-based atmospheric correction scheme, the authors assume no liability for:
+
+1. **Data Accuracy:** Any errors or inaccuracies in the output reflectance values resulting from poor quality Level 1 input data, incorrect metadata, or extreme atmospheric conditions.
+2. **Decision Making:** The use of 6ABOS outputs for critical decision-making, environmental policy, or commercial applications without independent ground-truth validation.
+3. **Software Stability:** Technical issues, bugs, or compatibility errors arising from the integration of the 6S radiative transfer engine or third-party dependencies.
+
+The user assumes all responsibility for the validation of results and the appropriate use of the atmospheric correction framework in their specific study area.
+
