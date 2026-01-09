@@ -15,13 +15,12 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 * **Simple:** Utilizing a streamlined RTM scheme that remains accessible while maintaining scientific rigor.
 
 ## Key Features
-* **6S Engine Integration:** Built upon the robust and gold-standard 6S radiative transfer model version 1.1.
+* **6S Engine Integration:** Built upon the robust 6S radiative transfer model version 1.1.
 * **Multi-Sensor Support:** Optimized for the high spectral resolution of **PRISMA** and **EnMAP** missions.
 * **Aquatic-Centric Design:** Specifically tuned for inland water bodies where atmospheric background noise is a dominant factor.
-* **Background Mitigation:** Implements a specialized offset subtraction to isolate the water-leaving radiance from atmospheric interference.
-
+  
 ## Methodology
-6ABOS implements a background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system calculates a refined offset that is subtracted from the Top-of-Atmosphere (TOA) signal to retrieve the Bottom-of-Atmosphere (BOA) reflectance.
+6ABOS implements a atmospheric background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system leverages simulated atmospheric parameters to solve the radiative transfer equation, enabling the conversion of Top-of-Atmosphere (TOA) radiance into Bottom-of-Atmosphere (BOA) reflectance.
 
 ## Repository Structure
 * `/src`: Core 6ABOS Python/R scripts.
