@@ -23,7 +23,7 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 ## Methodology
 6ABOS implements a background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system calculates a refined offset that is subtracted from the Top-of-Atmosphere (TOA) signal to retrieve the Bottom-of-Atmosphere (BOA) reflectance.
 
-## 📁 Repository Structure
+## Repository Structure
 * `/src`: Core 6ABOS Python/R scripts.
 * `/data`: Example metadata and spectral response functions (SRF) for PRISMA/EnMAP.
 * `/docs`: Technical documentation and 6S compilation guides.
@@ -64,10 +64,10 @@ December 1–4, 2025 | Darmstadt, Germany.
 [![View PDF](https://img.shields.io/badge/View_Document-PDF-red?logo=adobe-acrobat-reader&logoColor=white)](docs/GCaballero_IOCSM2025_poster.pdf)
 
 
-## 📄 License
+## License
 This project is licensed under the **MIT** License - see the LICENSE file for details.
 
-## ⚠️ Disclaimer
+## Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied. 6ABOS is a research tool developed for scientific purposes. While every effort has been made to ensure the accuracy of the 6S-based atmospheric correction scheme, the authors assume no liability for:
 
 1. **Data Accuracy:** Any errors or inaccuracies in the output reflectance values resulting from poor quality Level 1 input data, incorrect metadata, or extreme atmospheric conditions.
