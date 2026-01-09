@@ -36,6 +36,9 @@ This project is developed at the **Laboratory for Earth Observation**, Universit
 ## Authors
 For inquiries regarding collaboration or implementation for specific water quality monitoring projects, please contact the contributors.
 * **Gabriel Caballero** - *Lead Developer* - [gabriel.caballero@uv.es](mailto:gabriel.caballero@uv.es)
+* **Xavier Sòria Perpinyà** - *Scientific Contributor* 
+* **Bárbara Alvado Arranz** - *Scientific Contributor*
+* **Antonio Ruíz Verdú** - *Scientific Contributor* 
 
 ## Keywords
 `Remote Sensing` `Hyperspectral` `EnMAP` `PRISMA` `Atmospheric Correction` `6S Model` `Water Quality` `Inland Waters`
