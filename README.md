@@ -46,13 +46,13 @@ The methodology and validation of the **6ABOS** pipeline have been presented and
 *From Hyperspectral Data to Environmental Understanding* | April 2–4, 2025 | Munich, Germany.
 * **Oral/Poster:** *Assessment of EnMAP atmospheric correction in both oligotrophic and hypertrophic inland waters using 6S and in situ spectroscopy data.*
     * **Authors:** **Gabriel Caballero**, X. Sòria-Perpinyà, B. Alvado, A. Ruiz-Verdú, J. Delegido & J. Moreno.
-[![View PDF](https://img.shields.io/badge/View_Document-PDF-red?logo=adobe-acrobat-reader&logoColor=white)](docs/GCaballero_IOCSM2025_poster.pdf)
+[![View PDF](https://img.shields.io/badge/View_Document-PDF-red?logo=adobe-acrobat-reader&logoColor=white)](docs/GCaballero_Poster_EnMAP_2025.pdf)
 
 ### 🇧🇷 XXI Simposio Brasileiro de Sensoramento Remoto
 April 13–16, 2025 | Salvador de Bahia, Brazil.
 * **Technical Paper:** *Assessment of PRISMA atmospheric correction in hypertrophic inland waters using 6S and in situ spectroscopy data.*
     * **Authors:** **G. Caballero**, X. Sòria-Perpinyà, B. Pérez-González, A. Ruíz-Verdú, J. Delegido & J.M. Moreno.
-[![View PDF](https://img.shields.io/badge/View_Document-PDF-red?logo=adobe-acrobat-reader&logoColor=white)]()
+[![View PDF](https://img.shields.io/badge/View_Document-PDF-red?logo=adobe-acrobat-reader&logoColor=white)](docs/Caballero-proceedings-SBSR-2025-197673.pdf)
 
 ### 🇩🇪 International Ocean Colour Science (IOCS) Meeting
 December 1–4, 2025 | Darmstadt, Germany.
