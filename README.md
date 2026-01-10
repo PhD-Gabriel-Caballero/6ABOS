@@ -1,3 +1,5 @@
+[![Py6S](https://img.shields.io/badge/Powered%20by-Py6S-blue.svg)](https://py6s.readthedocs.io/en/master/)
+
 # 6ABOS: 6S-based Atmospheric Background Offset Subtraction
 <p align="center">
   <img src="assets/6ABOS.png" alt="6ABOS Header" width="100%">
@@ -17,7 +19,7 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 ## Key Features
 * **6S Engine Integration:** Built upon the robust 6S radiative transfer model version 1.1.
 * **Multi-Sensor Support:** Optimized for the high spectral resolution of **PRISMA** and **EnMAP** missions.
-* **Aquatic-Centric Design:** Specifically tuned for inland water bodies where atmospheric background noise is a dominant factor.
+* **Atmospheric Physics:** The atmospheric correction engine is powered by Py6S, employing a Homogeneous Lambertian + Water Lake ground reflectance model.
   
 ## Methodology
 6ABOS implements a atmospheric background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system leverages simulated atmospheric parameters to solve the radiative transfer equation, enabling the conversion of Top-of-Atmosphere (TOA) radiance into Bottom-of-Atmosphere (BOA) reflectance.
