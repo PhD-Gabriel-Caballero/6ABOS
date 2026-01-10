@@ -8,7 +8,7 @@
 **6ABOS** is a novel, efficient, and generic atmospheric correction (AC) framework designed specifically for **aquatic remote sensing**. It leverages a radiative transfer modeling (RTM) approach based on the **6S (Second Simulation of the Satellite Signal in the Solar Spectrum)** model to retrieve accurate water surface reflectance from hyperspectral sensors.
 
 ## The Challenge
-In aquatic remote sensing, accurately retrieving water quality parameters (e.g., chlorophyll-a, turbidity, CDOM) is a significant challenge. Light interaction with both the atmosphere and the water column is complex, and for inland water bodies, the water-leaving signal is often extremely weak compared to the atmospheric contribution. Standard land-based AC methods frequently fail to capture the subtle spectral signatures required for aquatic analysis.
+In aquatic remote sensing, accurately retrieving water quality parameters (e.g., chlorophyll-a, turbidity, CDOM) is a significant challenge. Light interaction with both the atmosphere and the water column is complex, and for inland water bodies, the water-leaving signal is often extremely weak compared to the atmospheric contribution. 
 
 ## Objectives
 The objective of 6ABOS is to bridge the gap between complex RTMs and practical application by providing a method that is:
