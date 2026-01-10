@@ -69,7 +69,7 @@ December 1–4, 2025 | Darmstadt, Germany.
 
 
 ## License
-This project is licensed under the **MIT** License - see the LICENSE file for details.
+This project is licensed under the **MIT** License - see the [MIT License](LICENSE) file for details.
 
 ## Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied. 6ABOS is a research tool developed for scientific purposes. While every effort has been made to ensure the accuracy of the 6S-based atmospheric correction scheme, the authors assume no liability for:
