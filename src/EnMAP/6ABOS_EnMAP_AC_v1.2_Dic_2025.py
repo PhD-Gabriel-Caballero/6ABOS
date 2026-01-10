@@ -3,7 +3,7 @@
 
 # ## 6ABOS EnMAP Atmospheric Correction Code
 
-# In[3]:
+# In[1]:
 
 
 # Library:
@@ -38,7 +38,7 @@ from scipy.interpolate import interp1d
 from scipy.signal import savgol_filter
 
 
-# In[53]:
+# In[27]:
 
 
 # Configuration dictionary
@@ -55,14 +55,14 @@ conf = {"verbose":True,
         # Total transmissivity threshold of gases
         "tgas_threshold":0.75,
         # Replace with the actual path to the EnMAP L1 folder
-        "input_dir": r'D:\EnMAP_L1\Gironde_Estuary\ENMAP01-____L1C-DT0000119389_20250317T115538Z_002_V010502_20250328T205130Z',
+        "input_dir": r'D:\EnMAP_L1\Lake_Constance\ENMAP01-____L1C-DT0000122760_20250403T105753Z_031_V010502_20250414T203123Z',
         # Replace with the actual path to the EnMAP L2 folder (6ABOS)
         "output_dir":'d:/6ABOS/',
         # Output: 1) Surface reflectance (output_rrs = False), 2) Remote sensing reflectance (output_rrs = True)
         "output_rrs":False}
 
 
-# In[5]:
+# In[3]:
 
 
 # Google Earth Engine (GEE) Authentication & Initialization
@@ -87,7 +87,7 @@ if conf['GEE']:
 
 # ### Functions definition
 
-# In[6]:
+# In[4]:
 
 
 """
@@ -287,7 +287,7 @@ class Atmospheric():
     return AOT
 
 
-# In[7]:
+# In[5]:
 
 
 #
@@ -343,7 +343,7 @@ def parse_xml(xml_file):
   return scene_parameters
 
 
-# In[8]:
+# In[6]:
 
 
 #
@@ -380,7 +380,7 @@ def get_enmap_band_parameters(xml_file):
     return df
 
 
-# In[9]:
+# In[7]:
 
 
 def calculate_gaussian_srf(df_enmap, spectral_range):
@@ -410,7 +410,7 @@ def calculate_gaussian_srf(df_enmap, spectral_range):
     return df_srf
 
 
-# In[26]:
+# In[8]:
 
 
 def atmospheric_correction(toa_radiance,ac_params,earth_sun_d,tgas_threshold):
@@ -472,7 +472,7 @@ def atmospheric_correction(toa_radiance,ac_params,earth_sun_d,tgas_threshold):
     return rrs,p_boa, l_toa_corrected
 
 
-# In[11]:
+# In[9]:
 
 
 def save_enmap_cube_to_tiff(data_cube, output_path, reference_raster_path, metadata_df=None):
@@ -553,7 +553,7 @@ def save_enmap_cube_to_tiff(data_cube, output_path, reference_raster_path, metad
 
 # ### Metadata and atmospheric constituent preprocessing
 
-# In[12]:
+# In[10]:
 
 
 # Path to TOA data definition
@@ -572,7 +572,7 @@ if conf['verbose']:
     print('Metadata file: ',path_to_xml_metadata)
 
 
-# In[15]:
+# In[11]:
 
 
 # EnMAP metadata file reading
@@ -617,7 +617,7 @@ else:
         target_alt = 0.0
 
 
-# In[16]:
+# In[12]:
 
 
 #Ozone Column: {200-500, AUT}: ozone value in Dobson units, AUT: Automatic
@@ -664,7 +664,7 @@ if conf['verbose']:
 
 # ### 6S Radiative Transfer Model Execution
 
-# In[17]:
+# In[13]:
 
 
 # ENMAP
@@ -699,7 +699,7 @@ s.altitudes.set_target_custom_altitude(target_alt)  # The altitude of the target
 ###############################################################################################################
 
 
-# In[18]:
+# In[14]:
 
 
 # Getting EnMAP's spectral configuration
@@ -734,53 +734,6 @@ if conf['data plotting']:
 
 
 # In[15]:
-
-
-# Running 6S for EnMAP Hyperspectral Bands 
-
-# Initialize results container
-dictionary_enmap_6s = {}
-
-for band_id in df_srf_final.index:
-    
-    # Get the SRF values for the current band (all wavelengths in the range)
-    # Py6S will interpolate these values across the specified range
-    srf_values = df_srf_final.loc[band_id].values.tolist()
-    
-    # Define the wavelength range for 6S (Converting nm to micrometers)
-    start_wv = wv_min / 1000.0
-    end_wv = wv_max / 1000.0
-    
-    # Configure the 6S object with the custom Spectral Response Function
-    s.wavelength = Wavelength(start_wv, end_wv, srf_values)
-    
-    # Run the atmospheric simulation
-    s.run()
-    
-    # Extract and store the atmospheric parameters
-
-    #s.outputs.values['transmittance_total_scattering'] = s.outputs.transmittance_total_scattering.total
-    s.outputs.values['spherical_albedo'] = s.outputs.spherical_albedo.total
-    s.outputs.values['co_transmittance_total'] = s.outputs.transmittance_co.total
-    s.outputs.values['co2_transmittance_total'] = s.outputs.transmittance_co2.total
-    s.outputs.values['oxyg_transmittance_total'] = s.outputs.transmittance_oxygen.total
-    s.outputs.values['no2_transmittance_total'] = s.outputs.transmittance_no2.total
-    s.outputs.values['ch4_transmittance_total'] = s.outputs.transmittance_ch4.total
-    s.outputs.values['ozone_transmittance_total'] = s.outputs.transmittance_ozone.total
-    s.outputs.values['water_transmittance_total'] = s.outputs.transmittance_water.total
-    s.outputs.values['total_scattering_transmittance_upward'] = s.outputs.transmittance_total_scattering.upward
-    s.outputs.values['total_scattering_transmittance_downward'] = s.outputs.transmittance_total_scattering.downward
-        
-    # Save in the dictionary using the Band ID as key
-    dictionary_enmap_6s[str(band_id)] = s.outputs.values
-
-    if conf['verbose'] and int(band_id) % 20 == 0:
-        print(f"6S simulation completed for Band {band_id}")
-
-print(f"Total bands processed: {len(dictionary_enmap_6s)}")
-
-
-# In[22]:
 
 
 # Running 6S for EnMAP Hyperspectral Bands 
@@ -836,7 +789,7 @@ for band_id in df_srf_final.index:
 print(f"Total bands processed: {len(dictionary_enmap_6s)}")
 
 
-# In[23]:
+# In[16]:
 
 
 if conf['verbose']:
@@ -845,12 +798,10 @@ if conf['verbose']:
 
 # ### ATMOSPHERIC CORRECTION: TOA RADIANCE TO SURFACE REFLECTANCE
 
-# In[54]:
+# In[28]:
 
 
 # Initializing containers for atmospheric components and output products
-sixabos_3d_array = []
-
 # Open the multi-band TIFF
 dataset = gdal.Open(path_to_toa_radiance, gdal.GA_ReadOnly)
 
@@ -859,6 +810,12 @@ if not dataset:
 else:
     # Get the total number of bands
     total_bands = dataset.RasterCount
+    rows = dataset.RasterYSize
+    cols = dataset.RasterXSize
+    
+    # Pre-allocate the 3D array to save memory 
+    sixabos_3d_cube = np.empty((total_bands, rows, cols), dtype=np.float32)
+
     if conf['verbose']:
         print(f"Total bands found: {total_bands}")
 
@@ -948,13 +905,13 @@ else:
                 # Final layout adjustments
                 plt.tight_layout()
                 plt.show()
-         
+          
         if conf['output_rrs']:
-            # Accumulating band-wise Rrs for 3D cube reconstruction
-            sixabos_3d_array.append(rrs)
+            # Storing band-wise Rrs into the pre-allocated 3D cube
+            sixabos_3d_cube[i-1, :, :] = rrs.astype(np.float32)
         else:
-            # Accumulating band-wise surface reflectance for 3D cube reconstruction
-            sixabos_3d_array.append(p_boa)
+            # Storing band-wise surface reflectance into the pre-allocated 3D cube
+            sixabos_3d_cube[i-1, :, :] = p_boa.astype(np.float32)
             
     # Clean up
     dataset = None
@@ -962,13 +919,10 @@ else:
 
 print('End of data processing')
 
-# Convert the list of bands into a single 3D NumPy array (Hypercube)
-sixabos_3d_cube = np.stack(sixabos_3d_array, axis=0)
-
 print(f"Final Data Cube Shape: {sixabos_3d_cube.shape}")
 
 
-# In[58]:
+# In[29]:
 
 
 if conf['data plotting']:
@@ -985,7 +939,7 @@ if conf['data plotting']:
         ]
 
         # Extract spectrum and wavelengths
-        x_coord, y_coord = 620, 450
+        x_coord, y_coord = 400, 800
         pixel_spectrum = sixabos_3d_cube[:, y_coord, x_coord]
 
         # Extracting TOA Radiance directly from the temporary dataset
@@ -1000,7 +954,7 @@ if conf['data plotting']:
             offset = enmap_spectral_conf_df.iloc[b-1]['offset']
             pixel_ltoa.append(val * gain + offset)
         
-        pixel_ltoa = np.array(pixel_ltoa)
+        pixel_ltoa = np.array(pixel_ltoa)*1000
         wavelengths = enmap_spectral_conf_df['wavelength_center'].values
 
     # Plotting EnMAP Rrs
@@ -1085,7 +1039,7 @@ if conf['data plotting']:
 
 # ### Raster file generation
 
-# In[59]:
+# In[30]:
 
 
 # Saving EnMAP datacube as TIF 
