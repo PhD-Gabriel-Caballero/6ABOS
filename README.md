@@ -25,7 +25,7 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 6ABOS implements a atmospheric background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system leverages simulated atmospheric parameters to solve the radiative transfer equation, enabling the conversion of Top-of-Atmosphere (TOA) radiance into Bottom-of-Atmosphere (BOA) reflectance.
 
 ## Repository Structure
-* `/src`: Core 6ABOS Python/R scripts.
+* `/src`: Core 6ABOS Python scripts.
 * `/data`: Example metadata and spectral response functions (SRF) for PRISMA/EnMAP.
 * `/docs`: Technical documentation and 6S compilation guides.
 * `/notebooks`: Tutorials on how to process a sample EnMAP tile.
