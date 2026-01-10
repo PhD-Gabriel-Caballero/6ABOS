@@ -1,4 +1,4 @@
-[![Py6S](https://img.shields.io/badge/Powered%20by-Py6S-blue.svg)](https://py6s.readthedocs.io/en/master/)
+[![Py6S](https://img.shields.io/badge/Powered%20by-Py6S-blue.svg)](https://py6s.readthedocs.io/en/latest/)
 
 # 6ABOS: 6S-based Atmospheric Background Offset Subtraction
 <p align="center">
