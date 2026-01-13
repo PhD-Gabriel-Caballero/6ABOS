@@ -24,6 +24,17 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 ## Methodology
 6ABOS implements a atmospheric background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system leverages simulated atmospheric parameters to solve the radiative transfer equation, enabling the conversion of Top-of-Atmosphere (TOA) radiance into Bottom-of-Atmosphere (BOA) reflectance.
 
+## Atmospheric Correction Results
+![Atmospheric Correction Results](assets/your_image_filename.png)
+
+### Description
+This figure illustrates the performance of the **6ABOS** atmospheric correction algorithm applied to Sentinel-3 (OLCI/SLSTR) data. 
+
+* **Top/Left Panel:** Shows the Top-of-Atmosphere (TOA) reflectance containing atmospheric noise and scattering.
+* **Bottom/Right Panel:** Shows the Bottom-of-Atmosphere (BOA) reflectance after the 6S-based correction, revealing the true spectral signature of the target.
+
+The correction effectively removes aerosol scattering and absorption effects, which is a critical preprocessing step for accurately estimating water quality parameters or land surface properties using Bayesian Neural Networks.
+
 ## Repository Structure
 * `/src`: Core 6ABOS Python scripts.
 * `/data`: Example metadata and spectral response functions (SRF) for PRISMA/EnMAP.
