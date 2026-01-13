@@ -28,7 +28,7 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 The 6ABOS model treats the atmosphere as a series of filters and reflectors. The workflow implemented in this repository follows these steps:
 
 1. **Gaseous Correction:** The raw $L_{TOA}$ is first corrected for absorption by atmospheric gases (primarily $O_{3}$) using the transmittance factor $T_{g}$.
-2. **Substraction of Path Radiance:** We remove the signal that never reached the surface (light scattered directly by the atmosphere/aerosols toward the sensor), represented by $L_{path}$.
+2. **Substraction of Path Radiance:** We remove the light scattered directly by the atmosphere toward the sensor, represented by $L_{path}$.
 3. **Normalization:** The remaining signal is normalized by the downwelling solar irradiance ($E_{s}$) and the upward transmittance ($T_{\uparrow}$).
 4. **Adjacency & Albedo Correction:** The formula accounts for the multiple interactions between the surface and the atmosphere via the spherical albedo ($S_{atm}$).
 
