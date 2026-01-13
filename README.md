@@ -28,12 +28,12 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 ![Atmospheric Correction Results](assets/Rrs_graph.png)
 
 ### Description
-This figure illustrates the performance of the **6ABOS** atmospheric correction algorithm applied to Sentinel-3 (OLCI/SLSTR) data. 
+This figure illustrates the performance of the **6ABOS** atmospheric correction algorithm applied to EnMAP data. 
 
-* **Top/Left Panel:** Shows the Top-of-Atmosphere (TOA) reflectance containing atmospheric noise and scattering.
-* **Bottom/Right Panel:** Shows the Bottom-of-Atmosphere (BOA) reflectance after the 6S-based correction, revealing the true spectral signature of the target.
+* **Green dashed line:** Shows the Top-of-Atmosphere (TOA) radiance containing atmospheric noise and scattering.
+* **Black continuos line:** Shows the Bottom-of-Atmosphere (BOA) Remote Sensing Reflectance after the 6S-based correction, revealing the true spectral signature of the target.
 
-The correction effectively removes aerosol scattering and absorption effects, which is a critical preprocessing step for accurately estimating water quality parameters or land surface properties using Bayesian Neural Networks.
+The correction effectively removes aerosol scattering and absorption effects, which is a critical preprocessing step for accurately estimating water quality parameters or land surface properties.
 
 ## Repository Structure
 * `/src`: Core 6ABOS Python scripts.
