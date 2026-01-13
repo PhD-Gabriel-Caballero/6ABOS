@@ -30,8 +30,8 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 ### Description
 This figure illustrates the performance of the **6ABOS** atmospheric correction algorithm applied to EnMAP data. 
 
-* **Green dashed line:** Shows the Top-of-Atmosphere (TOA) radiance containing atmospheric noise and scattering.
-* **Black continuos line:** Shows the Bottom-of-Atmosphere (BOA) Remote Sensing Reflectance after the 6S-based correction, revealing the true spectral signature of the target.
+* **Green dashed line:** Top-of-Atmosphere (TOA) radiance ($L_{TOA}$), containing atmospheric noise and scattering.
+* **Black continuous line:** Bottom-of-Atmosphere (BOA) Remote Sensing Reflectance ($R_{rs}$) after the 6S-based correction, revealing the true spectral signature of the target.
 
 The correction effectively removes aerosol scattering and absorption effects, which is a critical preprocessing step for accurately estimating water quality parameters or land surface properties.
 
