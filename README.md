@@ -37,12 +37,13 @@ The model follows this physical relationship:
 $$\rho_{BOA}(\lambda) = \frac{\left( \frac{L_{TOA}(\lambda)}{T_{g,O_{3}}(\lambda)} - L_{path}(\lambda) \right)}{\frac{E_{s}(\lambda) \cdot T_{\uparrow}(\lambda)}{\pi} + S_{atm}(\lambda) \left( \frac{L_{TOA}(\lambda)}{T_{g,O_{3}}(\lambda)} - L_{path}(\lambda) \right)}$$
 
 Where:
-$L_{TOA}(\lambda)$: Measured Top-of-Atmosphere radiance.
-$T_{g,O_{3}}(\lambda)$: Gaseous transmittance (specifically Ozone).
-$L_{path}(\lambda)$: Atmospheric path radiance (Rayleigh + Aerosol scattering).
-$E_{s}(\lambda)$: Solar irradiance at the top of the atmosphere.
-$T_{\uparrow}(\lambda)$: Upward atmospheric transmittance.
-$S_{atm}(\lambda)$: Spherical albedo of the atmosphere.
+
+* $L_{TOA}(\lambda)$: Measured Top-of-Atmosphere radiance.
+* $T_{g,O_{3}}(\lambda)$: Gaseous transmittance (specifically Ozone).
+* $L_{path}(\lambda)$: Atmospheric path radiance (Rayleigh + Aerosol scattering).
+* $E_{s}(\lambda)$: Solar irradiance at the top of the atmosphere.
+* $T_{\uparrow}(\lambda)$: Upward atmospheric transmittance.
+* $S_{atm}(\lambda)$: Spherical albedo of the atmosphere.
 
 ## Atmospheric Correction Results
 ![Atmospheric Correction Results](assets/Rrs_graph.png)
