@@ -56,6 +56,11 @@ This figure illustrates the performance of the **6ABOS** atmospheric correction 
 
 The correction effectively removes aerosol scattering and absorption effects, which is a critical preprocessing step for accurately estimating water quality parameters or land surface properties.
 
+## Full Documentation
+For detailed technical specifications, please refer to the complete user manual:
+
+<a href="docs/6ABOS_user_manual.pdf" target="_blank"> <img src="https://img.shields.io/badge/Download_Manual-PDF-red?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="Download Manual"> </a>
+
 ## Repository Structure
 * `/src`: Core 6ABOS Python scripts.
 * `/data`: Example metadata and spectral response functions (SRF) for PRISMA/EnMAP.
