@@ -24,14 +24,28 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 ## Methodology
 6ABOS implements a atmospheric background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system leverages simulated atmospheric parameters to solve the radiative transfer equation, enabling the conversion of Top-of-Atmosphere (TOA) radiance into Bottom-of-Atmosphere (BOA) reflectance.
 
+### Physics-based Retrieval
+The 6ABOS model treats the atmosphere as a series of filters and reflectors. The workflow implemented in this repository follows these steps:
+
+1. **Gaseous Correction:** The raw $L_{TOA}$ is first corrected for absorption by atmospheric gases (primarily $O_{3}$) using the transmittance factor $T_{g}$.
+2. **Substraction of Path Radiance:** We remove the signal that never reached the surface (light scattered directly by the atmosphere/aerosols toward the sensor), represented by $L_{path}$.
+3. **Normalization:** The remaining signal is normalized by the downwelling solar irradiance ($E_{s}$) and the upward transmittance ($T_{\uparrow}$).
+4. **Adjacency & Albedo Correction:** The formula accounts for the multiple interactions between the surface and the atmosphere via the spherical albedo ($S_{atm}$).
+
+The model follows this physical relationship:
+
+$$\rho_{BOA}(\lambda) = \frac{\left( \frac{L_{TOA}(\lambda)}{T_{g,O_{3}}(\lambda)} - L_{path}(\lambda) \right)}{\frac{E_{s}(\lambda) \cdot T_{\uparrow}(\lambda)}{\pi} + S_{atm}(\lambda) \left( \frac{L_{TOA}(\lambda)}{T_{g,O_{3}}(\lambda)} - L_{path}(\lambda) \right)}$$
+
+Where:$L_{TOA}(\lambda)$: Measured Top-of-Atmosphere radiance.$T_{g,O_{3}}(\lambda)$: Gaseous transmittance (specifically Ozone).$L_{path}(\lambda)$: Atmospheric path radiance (Rayleigh + Aerosol scattering).$E_{s}(\lambda)$: Solar irradiance at the top of the atmosphere.$T_{\uparrow}(\lambda)$: Upward atmospheric transmittance.$S_{atm}(\lambda)$: Spherical albedo of the atmosphere.
+
 ## Atmospheric Correction Results
 ![Atmospheric Correction Results](assets/Rrs_graph.png)
 
 ### Description
 This figure illustrates the performance of the **6ABOS** atmospheric correction algorithm applied to EnMAP data. 
 
-* **Green dashed line:** Top-of-Atmosphere (TOA) radiance ($L_{TOA}$), containing atmospheric noise and scattering.
-* **Black continuous line:** Bottom-of-Atmosphere (BOA) Remote Sensing Reflectance ($R_{rs}$) after the 6S-based correction, revealing the true spectral signature of the target.
+* **Green dashed line:** TOA Radiance ($L_{TOA}$), containing atmospheric noise and scattering.
+* **Black continuous line:** BOA Remote Sensing Reflectance ($R_{rs}$) after the 6S-based correction, revealing the true spectral signature of the target.
 
 The correction effectively removes aerosol scattering and absorption effects, which is a critical preprocessing step for accurately estimating water quality parameters or land surface properties.
 
