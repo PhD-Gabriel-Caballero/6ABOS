@@ -38,10 +38,10 @@ $$\rho_{BOA}(\lambda) = \frac{\left( \frac{L_{TOA}(\lambda)}{T_{g,O_{3}}(\lambda
 
 Where:
 
-* $L_{TOA}(\lambda)$: Measured Top-of-Atmosphere radiance.
-* $T_{g,O_{3}}(\lambda)$: Gaseous transmittance (specifically Ozone).
+* $L_{TOA}(\lambda)$: TOA radiance.
+* $T_{g,O_{3}}(\lambda)$: Ozone transmittance.
 * $L_{path}(\lambda)$: Atmospheric path radiance (Rayleigh + Aerosol scattering).
-* $E_{s}(\lambda)$: Solar irradiance at the top of the atmosphere.
+* $E_{s}(\lambda)$: Solar irradiance at TOA.
 * $T_{\uparrow}(\lambda)$: Upward atmospheric transmittance.
 * $S_{atm}(\lambda)$: Spherical albedo of the atmosphere.
 
