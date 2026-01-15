@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+# 6ABOS: 6S-based Atmospheric Background Offset Subtraction for Atmospheric Correction
+# Copyright (C) 2026 Gabriel Caballero (University of Valencia)
+#
+# This program is free software: you can redistribute it and/or modify it under 
+# the terms of the GNU General Public License as published by the Free Software 
+# Foundation, either version 3 of the License, or (at your option) any later version.
+
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -6,7 +14,7 @@ build-backend = "setuptools.build_meta"
 name = "sixabos"
 version = "1.0.0"
 authors = [
-  { name="Gabriel Caballero", email="your.email@uv.es" },
+  { name="Gabriel Caballero", email="gabriel.caballero@uv.es" },
 ]
 description = "6S-based Atmospheric Background Offset Subtraction for EnMAP"
 readme = "README.md"
@@ -30,8 +38,8 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/yourusername/6ABOS"
-"Bug Tracker" = "https://github.com/yourusername/6ABOS/issues"
+"Homepage" = "https://github.com/PhD-Gabriel-Caballero/6ABOS"
+"Bug Tracker" = "https://github.com/PhD-Gabriel-Caballero/6ABOS/issues"
 
 [project.scripts]
 sixabos = "sixabos.main:main"
