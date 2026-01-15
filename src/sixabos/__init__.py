@@ -17,14 +17,9 @@
 
 """6ABOS Atmospheric processing framework. Software package developed by UV."""
 
+from .main import run_6abos
+from .core import SixABOSEngine
+from .config import DEFAULT_CONF
+
 __version__ = "1.0.0"
-__author__ = "Gabriel Caballero"
-__email__ = 'gabriel.caballero@uv.es'
-
-# Main classes for easy access
-# from .models import AtmosphericCorrection
-
-
-
-
-
+__all__ = ["run_6abos", "SixABOSEngine", "DEFAULT_CONF"]
