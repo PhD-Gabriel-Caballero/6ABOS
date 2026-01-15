@@ -65,7 +65,14 @@ The correction effectively removes aerosol scattering and absorption effects, wh
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PhD-Gabriel-Caballero/6ABOS/blob/main/notebooks/EnMAP/6ABOS_EnMAP_AC_v1.2_Dic_2025.ipynb)
 
 ## Affiliation & Support
-This project is developed at the **Laboratory for Earth Observation**, Universitat de València, within the framework of the **RESSBIO** project. 
+
+This project is developed at the [Laboratory for Earth Observation (LEO)](https://ipl.uv.es/leo/), part of the **Image Processing Laboratory (IPL)** at the **Universitat de València**.
+
+### Project Context
+**6ABOS** is built within the framework of the **RESSBIO** (*Remote Sensing Spectroscopy for wetlands BIOdiversity*) project (**CIPROM/2021/49**).
+
+### Funding
+This work is supported by the **PROMETEO Program** of the **Generalitat Valenciana**.
 
 ## Authors
 For inquiries regarding collaboration or implementation for specific water quality monitoring projects, please contact the contributors.
