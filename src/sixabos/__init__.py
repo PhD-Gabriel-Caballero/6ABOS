@@ -17,12 +17,13 @@
 
 """6ABOS Atmospheric processing framework. Software package developed by UV."""
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 __author__ = "Gabriel Caballero"
 __email__ = 'gabriel.caballero@uv.es'
 
 # Main classes for easy access
-from .models import AtmosphericCorrection
+# from .models import AtmosphericCorrection
+
 
 
 
