@@ -12,7 +12,7 @@
 # FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
 # details.
 #
-# You should have received a copy of the GNU Lesser General Public License along
+# You should have received a copy of the GNU General Public License along
 # with this program. If not, see <https://www.gnu.org/licenses/>.
 
 """6ABOS Atmospheric processing framework. Software package developed by UV."""
@@ -23,6 +23,7 @@ __email__ = 'gabriel.caballero@uv.es'
 
 # Main classes for easy access
 # from .models import AtmosphericCorrection
+
 
 
 
