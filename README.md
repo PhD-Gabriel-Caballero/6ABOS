@@ -99,9 +99,8 @@ December 1–4, 2025 | Darmstadt, Germany.
     * **Authors:** **Gabriel Rodrigo Caballero**, X. Sòria-Perpinyà, B. Alvado, A. Ruiz-Verdú, J. Delegido & J. Moreno.
 [![View PDF](https://img.shields.io/badge/View_Document-PDF-red?logo=adobe-acrobat-reader&logoColor=white)](docs/GCaballero_IOCSM2025_poster.pdf)
 
-
 ## License
-This project is licensed under the **MIT** License - see the [MIT License](LICENSE) file for details.
+This project is licensed under the **GNU General Purpose License Version 3** - see the [GNU GPL V3](LICENSE) file for details.
 
 ## Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied. 6ABOS is a research tool developed for scientific purposes. While every effort has been made to ensure the accuracy of the 6S-based atmospheric correction scheme, the authors assume no liability for:
