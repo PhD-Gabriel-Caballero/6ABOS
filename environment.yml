@@ -21,10 +21,10 @@ channels:
   - defaults
 dependencies:
   - python=3.9
+  - py6s
   - numpy
   - pandas
   - gdal
-  - py6s
   - earthengine-api
   - matplotlib
   - scipy
