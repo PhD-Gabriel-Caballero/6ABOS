@@ -48,7 +48,6 @@ Where:
 ## Atmospheric Correction Results
 ![Atmospheric Correction Results](assets/Rrs_graph.png)
 
-### Description
 This figure illustrates the performance of the **6ABOS** atmospheric correction algorithm applied to EnMAP data. 
 
 * **Green dashed line:** TOA Radiance ($L_{TOA}$), containing atmospheric noise and scattering.
@@ -63,6 +62,24 @@ The correction effectively removes aerosol scattering and absorption effects, wh
 * `/notebooks`: Tutorials on how to process a sample EnMAP tile.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PhD-Gabriel-Caballero/6ABOS/blob/main/notebooks/EnMAP/6ABOS_EnMAP_AC_v1.2_Dic_2025.ipynb)
+
+## Installation & Environment Setup
+
+This project requires a specific environment to handle geospatial libraries (GDAL) and atmospheric physics simulations (Py6S). We recommend using **Miniforge** (a lightweight distribution of Mamba/Conda) for faster dependency resolution.
+
+### 1. Install Miniforge
+If you don't have it yet, download and install the version for your OS:
+- **Windows/macOS/Linux:** [Miniforge Download Page](https://github.com/conda-forge/miniforge#miniforge3)
+
+### 2. Create the Mamba Environment
+Open your terminal (or Miniforge Prompt on Windows) and run the following commands to create and activate the environment:
+
+```bash
+# Create the environment with Python 3.10
+mamba create -n sixabos_env python=3.10 -y
+
+# Activate the environment
+mamba activate sixabos_env
 
 ## Affiliation & Support
 
