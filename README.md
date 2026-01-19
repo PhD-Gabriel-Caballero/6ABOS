@@ -1,6 +1,4 @@
-[![Py6S](https://img.shields.io/badge/Powered%20by-Py6S-blue.svg)](https://py6s.readthedocs.io/en/latest/)[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18232369.svg)](https://doi.org/10.5281/zenodo.18232369)
-
-[![DOI](https://zenodo.org/badge/1130957972.svg)](https://doi.org/10.5281/zenodo.18232368)
+[![Py6S](https://img.shields.io/badge/Powered%20by-Py6S-blue.svg)](https://py6s.readthedocs.io/en/latest/)[![DOI](https://zenodo.org/badge/1130957972.svg)](https://doi.org/10.5281/zenodo.18232368)
 
 # 6ABOS: 6S-based Atmospheric Background Offset Subtraction
 <p align="center">
