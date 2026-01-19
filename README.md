@@ -93,6 +93,9 @@ conda activate sixabos_env
 pip install -e .
 foo
 ```
+## Changelog
+See [HISTORY.rst]() for a detailed list of changes and version evolution.
+
 ## Affiliation & Support
 
 This project is developed at the [Laboratory for Earth Observation (LEO)](https://ipl.uv.es/leo/), part of the **Image Processing Laboratory (IPL)** at the **Universitat de València**.
