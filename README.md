@@ -56,7 +56,7 @@ This figure illustrates the performance of the **6ABOS** atmospheric correction 
 The correction effectively removes aerosol scattering and absorption effects, which is a critical preprocessing step for accurately estimating water quality parameters or land surface properties.
 
 ## Repository Structure
-* `/src`: Core 6ABOS Python scripts.
+* `/src/sixabos`: Core 6ABOS Python scripts.
 * `/data`: Example metadata and spectral response functions (SRF) for PRISMA/EnMAP.
 * `/docs`: Technical documentation and 6S compilation guides.
 * `/notebooks`: Tutorials on how to process a sample EnMAP tile.
@@ -144,3 +144,23 @@ This software is provided "as is", without warranty of any kind, express or impl
 
 The user assumes all responsibility for the validation of results and the appropriate use of the atmospheric correction framework in their specific study area.
 
+---
+## Citation
+
+If you use this software in your research, please cite it as follows:
+
+**APA Format:**
+> PhD-Gabriel-Caballero. (2026). PhD-Gabriel-Caballero/6ABOS: v1.1.0 - Modular Architecture and CLI Support (v1.1.0). Zenodo. https://doi.org/10.5281/zenodo.18300277
+
+**BibTeX:**
+```bibtex
+@software{phd_gabriel_caballero_2026_18300277,
+  author       = {PhD-Gabriel-Caballero},
+  title        = {PhD-Gabriel-Caballero/6ABOS: v1.1.0 - Modular Architecture and CLI Support},
+  month        = jan,
+  year         = 2026,
+  publisher    = {Zenodo},
+  version      = {v1.1.0},
+  doi          = {10.5281/zenodo.18300277},
+  url          = {[https://doi.org/10.5281/zenodo.18300277](https://doi.org/10.5281/zenodo.18300277)}
+}
