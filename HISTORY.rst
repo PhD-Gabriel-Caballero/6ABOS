@@ -7,8 +7,8 @@ History
 
 * **Refactoring (Major Architecture Change)**
     * Migrated from a monolithic "spaghetti code" script to a professional modular structure.
-    * Reorganized project into dedicated modules: ``core.py`` (RTM logic), ``main.py`` (workflow execution), ``utils.py`` (helper functions), and ``config.py`` (global settings).
-    * Implemented the **src-layout** structure to follow modern Python packaging standards.
+    * Reorganized project into dedicated modules: ``core.py`` (RTM logic), ``main.py`` (workflow execution), ``utils.py`` (helper functions), ``atmospheric.py`` (atmospheric constituents retrieval module) and ``config.py`` (global settings).
+    * Implemented the **src-layout** structure to follow Python packaging standards.
 
 * **New Features**
     * Added **CLI (Command Line Interface)** support via the ``sixabos-run`` entry point.
