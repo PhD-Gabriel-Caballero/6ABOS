@@ -74,12 +74,6 @@ If you don't have it yet, download and install the version for your OS:
 ### 2. Create the Mamba Environment
 Open your terminal (or Miniforge Prompt on Windows) and run the following commands to create and activate the environment:
 
-#### Create the environment with Python 3.10
-mamba create -n sixabos_env python=3.10 -y
-
-#### Activate the environment
-mamba activate sixabos_env
-
 ```console
 # 1. Clone the repository
 git clone [https://github.com/PhD-Gabriel-Caballero/6ABOS.git](https://github.com/PhD-Gabriel-Caballero/6ABOS.git)
