@@ -5,24 +5,25 @@ History
 1.1.0 (2026-01-19)
 ------------------
 
-* **Added**
-    * New ``aerosol_profile`` key in ``DEFAULT_CONF`` to support Maritime, Continental, Urban, and Desert models.
-    * Support for dynamic Aerosol Optical Thickness (AOT) configuration per scene.
-    * Console logging for 6S engine parameters (AOT, Water Vapor, Ozone) during initialization.
-    * Added ``pyproject.toml`` for modern PEP 517 packaging and installation.
+* **Refactoring (Major Architecture Change)**
+    * Migrated from a monolithic "spaghetti code" script to a professional modular structure.
+    * Reorganized project into dedicated modules: ``core.py`` (RTM logic), ``main.py`` (workflow execution), ``utils.py`` (helper functions), and ``config.py`` (global settings).
+    * Implemented the **src-layout** structure to follow modern Python packaging standards.
 
-* **Changed**
-    * Refactored ``run_single_6s_band`` to accept a single task tuple to fix ``ProcessPoolExecutor`` compatibility.
-    * Updated project layout to a standard ``src/`` structure.
-    * Improved English documentation and comments across the core modules.
+* **New Features**
+    * Added **CLI (Command Line Interface)** support via the ``sixabos-run`` entry point.
+    * Integrated ``pyproject.toml`` for PEP 517 compliant installation.
+    * Added automated output directory creation and improved input validation logic.
+    * Implemented flexible aerosol profile selection (Continental, Maritime, Urban, Desert, BiomassBurning) via CLI arguments.
 
-* **Fixed**
-    * Fixed ``TypeError`` in parallel processing caused by incorrect argument passing to worker threads.
-    * Resolved git synchronization issues (rejected pushes) by performing a rebase with the remote origin.
+* **Improvements & Bug Fixes**
+    * Enhanced error handling for missing EnMAP metadata or spectral image files.
+    * Optimized parallel processing worker initialization to prevent redundant module imports.
+    * Fixed a ``TypeError`` occurring when the output directory was not explicitly defined.
 
-1.0.0 (2025-12-01)
+1.0.0 (2026-01-12)
 ------------------
 
-* **Added**
-    * Initial implementation of the 6ABOS core logic for EnMAP L1C data.
-    * Support for reading EnMAP XML metadata and spectral response functions.
+* **Initial Release**
+    * First functional version of 6ABOS released on Zenodo.
+    * Basic implementation of 6S-based atmospheric correction for EnMAP L1C data.
