@@ -39,7 +39,7 @@ except ImportError as e:
 # Target paths
 
 # input_folder: Root directory containing the EnMAP L1C scene (XML and TIFF files)
-input_folder = r"C:\EnMAP_6S_AC\ENMAP_L1C_Barbara\ENMAP01-____L1C-DT0000087385_20240731T112117Z_002_V010501_20241122T180323Z" # example 
+input_folder = r"C:\EnMAP_6S_AC\ENMAP01-____L1C-DT0000087385_20240731T112117Z_002_V010501_20241122T180323Z" # example 
 
 # output_folder: Destination for the corrected BOA (Bottom of Atmosphere) GeoTIFFs
 output_folder = r"C:\6ABOS_Results"
