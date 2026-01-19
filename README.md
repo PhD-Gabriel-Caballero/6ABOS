@@ -168,7 +168,7 @@ Caballero Cañas, G. R., Sòria-Perpinyà, X., Alvado Arranz, B., & Ruíz Verdú
   doi          = {10.5281/zenodo.18300277},
   url          = {[https://doi.org/10.5281/zenodo.18300277](https://doi.org/10.5281/zenodo.18300277)}
 }
-
+```
 ## License and Disclaimer
 This project is licensed under the **GNU General Purpose License Version 3** - see the [GNU GPL V3](LICENSE) file for details.
 
