@@ -51,7 +51,7 @@ dependencies = [
 "Homepage" = "https://github.com/PhD-Gabriel-Caballero/6ABOS"
 "Bug Tracker" = "https://github.com/PhD-Gabriel-Caballero/6ABOS/issues"
 "Documentation" = "https://github.com/PhD-Gabriel-Caballero/6ABOS/tree/main/docs"
-"Change log" = "https://git.gfz.de/EnMAP/GFZ_Tools_EnMAP_BOX/EnPT/-/blob/main/HISTORY.rst"
+"Change log" = "https://github.com/PhD-Gabriel-Caballero/6ABOS/blob/main/HISTORY.rst"
 "Zenodo" = "https://zenodo.org/records/18232369"
 
 [project.scripts]
