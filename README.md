@@ -148,7 +148,7 @@ The user assumes all responsibility for the validation of results and the approp
 If you use this software in your research, please cite it as follows:
 
 **APA Format:**
-> PhD-Gabriel-Caballero. (2026). PhD-Gabriel-Caballero/6ABOS: v1.1.0 - Modular Architecture and CLI Support (v1.1.0). Zenodo. https://doi.org/10.5281/zenodo.18300277
+PhD-Gabriel-Caballero. (2026). PhD-Gabriel-Caballero/6ABOS: v1.1.0 - Modular Architecture and CLI Support (v1.1.0). Zenodo. https://doi.org/10.5281/zenodo.18300277
 
 **BibTeX:**
 ```bibtex
