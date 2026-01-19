@@ -94,7 +94,7 @@ pip install -e .
 foo
 ```
 ## Changelog
-See [HISTORY.rst]() for a detailed list of changes and version evolution.
+See [HISTORY.rst](https://github.com/PhD-Gabriel-Caballero/6ABOS/blob/main/HISTORY.rst) for a detailed list of changes and version evolution.
 
 ## Affiliation & Support
 
