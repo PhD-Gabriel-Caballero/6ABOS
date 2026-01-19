@@ -86,6 +86,24 @@ conda activate sixabos_env
 # 3. Install the package in editable mode
 pip install -e .
 ```
+## Usage
+
+6ABOS v1.1.0 can be used either as a standalone command-line tool or as a Python library integrated into your workflows.
+
+### 1. Command Line Interface (CLI)
+After installation, you can run the atmospheric correction from any terminal without opening a Python script. 
+
+**Basic command:**
+```console
+sixabos-run --input "path/to/EnMAP_scene" --output "path/to/output_folder"
+```
+### 2. Advanced options: 
+You can specify the aerosol profile if needed:
+```console
+sixabos-run -input "path/to/EnMAP_scene" --output "path/to/output_folder" --aerosol maritime
+```
+Run ```console sixabos-run --help``` to see all available arguments.
+
 ## Changelog
 See [HISTORY.rst](https://github.com/PhD-Gabriel-Caballero/6ABOS/blob/main/HISTORY.rst) for a detailed list of changes and version evolution.
 
@@ -131,18 +149,6 @@ December 1–4, 2025 | Darmstadt, Germany.
     * **Authors:** **Gabriel Rodrigo Caballero**, X. Sòria-Perpinyà, B. Alvado, A. Ruiz-Verdú, J. Delegido & J. Moreno.
 [![View PDF](https://img.shields.io/badge/View_Document-PDF-red?logo=adobe-acrobat-reader&logoColor=white)](docs/GCaballero_IOCSM2025_poster.pdf)
 
-## License
-This project is licensed under the **GNU General Purpose License Version 3** - see the [GNU GPL V3](LICENSE) file for details.
-
-## Disclaimer
-This software is provided "as is", without warranty of any kind, express or implied. 6ABOS is a research tool developed for scientific purposes. While every effort has been made to ensure the accuracy of the 6S-based atmospheric correction scheme, the authors assume no liability for:
-
-1. **Data Accuracy:** Any errors or inaccuracies in the output reflectance values resulting from poor quality Level 1 input data, incorrect metadata, or extreme atmospheric conditions.
-2. **Decision Making:** The use of 6ABOS outputs for critical decision-making, environmental policy, or commercial applications without independent ground-truth validation.
-3. **Software Stability:** Technical issues, bugs, or compatibility errors arising from the integration of the 6S radiative transfer engine or third-party dependencies.
-
-The user assumes all responsibility for the validation of results and the appropriate use of the atmospheric correction framework in their specific study area.
-
 ## Citation
 
 If you use this software in your research, please [cite](CITATION.cff) it as follows:
@@ -162,3 +168,14 @@ Caballero Cañas, G. R., Sòria-Perpinyà, X., Alvado Arranz, B., & Ruíz Verdú
   doi          = {10.5281/zenodo.18300277},
   url          = {[https://doi.org/10.5281/zenodo.18300277](https://doi.org/10.5281/zenodo.18300277)}
 }
+
+## License and Disclaimer
+This project is licensed under the **GNU General Purpose License Version 3** - see the [GNU GPL V3](LICENSE) file for details.
+
+This software is provided "as is", without warranty of any kind, express or implied. 6ABOS is a research tool developed for scientific purposes. While every effort has been made to ensure the accuracy of the 6S-based atmospheric correction scheme, the authors assume no liability for:
+
+1. **Data Accuracy:** Any errors or inaccuracies in the output reflectance values resulting from poor quality Level 1 input data, incorrect metadata, or extreme atmospheric conditions.
+2. **Decision Making:** The use of 6ABOS outputs for critical decision-making, environmental policy, or commercial applications without independent ground-truth validation.
+3. **Software Stability:** Technical issues, bugs, or compatibility errors arising from the integration of the 6S radiative transfer engine or third-party dependencies.
+
+The user assumes all responsibility for the validation of results and the appropriate use of the atmospheric correction framework in their specific study area.
