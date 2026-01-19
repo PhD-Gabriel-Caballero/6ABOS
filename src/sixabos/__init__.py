@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # 6ABOS: 6S-based Atmospheric Background Offset Subtraction for Atmospheric Correction
 # Copyright (C) 2026 Gabriel Caballero (University of Valencia)
+# email: gabriel.caballero@uv.es
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,12 +16,15 @@
 # You should have received a copy of the GNU General Public License along
 # with this program. If not, see <https://www.gnu.org/licenses/>.
 
-"""6ABOS Atmospheric processing framework. Software package developed by UV."""
+""" 6ABOS: 6S-based Atmospheric Background Offset Subtraction Atmospheric Correction Framework
+6ABOS Package Initialization.
+Software package developed by UV"""
 
 from .main import run_6abos
 from .core import SixABOSEngine
 from .config import DEFAULT_CONF
 
 __version__ = "1.0.0"
-__all__ = ["run_6abos", "SixABOSEngine", "DEFAULT_CONF"]
+__author__ = "Gabriel Caballero"
 
+print("--- [SYSTEM] 6ABOS Modules successfully hooked ---")
