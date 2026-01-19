@@ -148,13 +148,13 @@ The user assumes all responsibility for the validation of results and the approp
 If you use this software in your research, please [cite](CITATION.cff) it as follows:
 
 **APA Format:**
-PhD-Gabriel-Caballero. (2026). PhD-Gabriel-Caballero/6ABOS: v1.1.0 - Modular Architecture and CLI Support (v1.1.0). Zenodo. https://doi.org/10.5281/zenodo.18300277
+Caballero Cañas, G. R., Sòria-Perpinyà, X., Alvado Arranz, B., & Ruíz Verdú, A. (2025). 6ABOS: 6S-based Atmospheric Background Offset Subtraction Framework (Version 1.1.0) [Computer software]. https://doi.org/10.5281/zenodo.18300277
 
 **BibTeX:**
 ```bibtex
 @software{phd_gabriel_caballero_2026_18300277,
   author       = {Caballero Cañas Gabriel Rodrigo, Sòria Perpinyà Xavier, Alvado Arranz Bárbara, Ruíz Verdú Antonio},
-  title        = {PhD-Gabriel-Caballero/6ABOS: v1.1.0 - Modular Architecture and CLI Support},
+  title        = {6ABOS: 6S-based Atmospheric Background Offset Subtraction Framework (Version 1.1.0)},
   month        = jan,
   year         = 2026,
   publisher    = {Zenodo},
