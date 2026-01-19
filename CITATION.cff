@@ -1,0 +1,22 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Caballero Cañas"
+  given-names: "Gabriel Rodrigo"
+  affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
+- family-names: "Sòria Perpinyà"
+  given-names: "Xavier"
+  affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
+- family-names: "Alvado Arranz"
+  given-names: "Bárbara"
+  affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
+- family-names: "Ruiz-Verdú"
+  given-names: "Antonio"
+  affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
+
+title: "6ABOS: 6S-based Atmospheric Background Offset Subtraction"
+version: 1.1.0
+doi: 10.5281/zenodo.18300277
+date-released: 2026-01-19
+url: "https://github.com/PhD-Gabriel-Caballero/6ABOS"
+license: GPL-3.0
