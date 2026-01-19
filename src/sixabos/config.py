@@ -22,16 +22,16 @@ Software package developed by UV"""
 
 DEFAULT_CONF = {
     "verbose": True,
-    "data_plotting": False,      # Enable spectral validation plots
-    "data_storing": False,       # Save the output GeoTIFF
-    "GEE": False,               # Use Google Earth Engine for atmospheric parameters
-    "GEE_project_id": "project-id", 
-    "max_wavelength": 2480,
-    "min_wavelength": 379,
-    "wavelength_step": 2.5,
-    "aerosol_profile": 'Continental', # Options: 'Continental', 'Maritime', 'Urban', 'Desert', 'BiomassBurning'
-    "tgas_threshold": 0.75,     # Mask pixels with low gas transmittance
-    "input_dir": None,          # Path to EnMAP L1C folder
-    "output_dir": None,         # Destination folder
-    "output_rrs": True         # True for Rrs, False for pBOA
+    "data_plotting": False,             # Enable spectral validation plots
+    "data_storing": True,               # Save the output GeoTIFF
+    "GEE": True,                        # Use Google Earth Engine for atmospheric parameters
+    "GEE_project_id": "project-id",     # Complete whit your personal/institutional project ID.
+    "max_wavelength": 2480,             # maximum wavelength for EnMAP
+    "min_wavelength": 379,              # minimum wavelength for EnMAP
+    "wavelength_step": 2.5,             # Py6S wavelength step
+    "aerosol_profile": 'Continental',   # Options: 'Continental', 'Maritime', 'Urban', 'Desert', 'BiomassBurning'
+    "tgas_threshold": 0.75,             # Mask pixels with low gas transmittance
+    "input_dir": None,                  # Path to EnMAP L1C folder
+    "output_dir": None,                 # Destination folder
+    "output_rrs": True                  # True for Rrs, False for pBOA
 }

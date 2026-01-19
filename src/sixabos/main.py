@@ -22,6 +22,8 @@ Software package developed by UV"""
 
 import os, glob, time, numpy as np, matplotlib.pyplot as plt
 from datetime import datetime
+import argparse
+import sys
 from osgeo import gdal
 from .config import DEFAULT_CONF
 from .utils import parse_xml, get_enmap_band_parameters, save_enmap_tiff, calculate_gaussian_srf, print_6s_inputs, plot_6abos_validation, plot_sensor_srf
@@ -33,10 +35,48 @@ gdal.UseExceptions()
 
 def run_6abos(user_config=None):
     """Executes the complete 6ABOS atmospheric correction pipeline."""
+    # Start with the Global Defaults
     conf = DEFAULT_CONF.copy()
-    if user_config: conf.update(user_config)
-    
-    start_wall_time = time.time()
+
+    # Handle CLI if no dictionary was passed directly
+    if user_config is None:
+        parser = argparse.ArgumentParser(description="6ABOS Atmospheric Correction for EnMAP")
+        parser.add_argument("--input", type=str, help="Input folder containing EnMAP data")
+        parser.add_argument("--output", type=str, help="Output directory")
+        parser.add_argument("--aerosol", type=str, choices=['Continental', 'Maritime', 'Urban', 'Desert','BiomassBurning'], 
+                            help="Aerosol profile to use")
+        
+        # If no arguments are passed at all in the terminal
+        if len(sys.argv) == 1:
+            parser.print_help()
+            return
+
+        args = parser.parse_args()
+        
+        # Update conf with CLI arguments (only if they were actually provided)
+        if args.input: conf['input_dir'] = args.input
+        if args.output: conf['output_dir'] = args.output
+        if args.aerosol: conf['aerosol_profile'] = args.aerosol
+        
+    else:
+        # Handle Direct Dictionary call (from run_sixabos.py)
+        conf.update(user_config)
+        
+    # Check if input_dir exists and is not None
+    if not conf.get('input_dir') or not os.path.isdir(conf['input_dir']):
+        print(f"[!] Error: Invalid or missing input directory: {conf.get('input_dir')}")
+        print("[*] Please provide a valid path to the EnMAP L1C folder.")
+        return
+
+    # If output_dir is None or empty, create a default '6ABOS_Results' folder inside input_dir
+    if not conf.get('output_dir'):
+        conf['output_dir'] = os.path.join(conf['input_dir'], "6ABOS_Results")
+        print(f"[*] No output directory specified. Using default: {conf['output_dir']}")
+
+    # Ensure the output directory physically exists on disk
+    if not os.path.exists(conf['output_dir']):
+        os.makedirs(conf['output_dir'], exist_ok=True)
+        print(f"[*] Created output directory: {conf['output_dir']}")
     
     # Metadata extraction & Date fix
     xml_path = glob.glob(os.path.join(conf['input_dir'], "*METADATA.XML"))[0]
