@@ -80,6 +80,19 @@ mamba create -n sixabos_env python=3.10 -y
 #### Activate the environment
 mamba activate sixabos_env
 
+```console
+# 1. Clone the repository
+git clone [https://github.com/PhD-Gabriel-Caballero/6ABOS.git](https://github.com/PhD-Gabriel-Caballero/6ABOS.git)
+cd 6ABOS
+
+# 2. Create the environment from the provided file
+mamba env create -f environment.yml
+conda activate sixabos_env
+
+# 3. Install the package in editable mode
+pip install -e .
+foo
+```
 ## Affiliation & Support
 
 This project is developed at the [Laboratory for Earth Observation (LEO)](https://ipl.uv.es/leo/), part of the **Image Processing Laboratory (IPL)** at the **Universitat de València**.
