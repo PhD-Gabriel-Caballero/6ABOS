@@ -102,7 +102,7 @@ You can specify the aerosol profile if needed:
 ```console
 sixabos-run -input "path/to/EnMAP_scene" --output "path/to/output_folder" --aerosol maritime
 ```
-Run ```console sixabos-run --help``` to see all available arguments.
+Run ```sixabos-run --help``` to see all available arguments.
 
 ## Changelog
 See [HISTORY.rst](https://github.com/PhD-Gabriel-Caballero/6ABOS/blob/main/HISTORY.rst) for a detailed list of changes and version evolution.
