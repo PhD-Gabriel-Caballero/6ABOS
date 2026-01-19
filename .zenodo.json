@@ -1,0 +1,28 @@
+{
+    "creators": [
+        {
+            "name": "Caballero Cañas, Gabriel Rodrigo",
+            "affiliation": "Image Processing Laboratory (IPL), Universitat de València, Spain",
+            "orcid": "https://orcid.org/0000-0003-2268-2674"
+        },
+        {
+            "name": "Sória Perpinyà, Xavier",
+            "affiliation": "Image Processing Laboratory (IPL), Universitat de València, Spain"
+            "orcid": "https://orcid.org/"
+        },
+        {
+            "name": "Alvado Arranz, Bárbara",
+            "affiliation": "Image Processing Laboratory (IPL), Universitat de València, Spain"
+            "orcid": "https://orcid.org/"
+        },
+        {
+            "name": "Ruiz-Verdú, Antonio",
+            "affiliation": "Image Processing Laboratory (IPL), Universitat de València, Spain"
+            "orcid": "https://orcid.org/"
+        }
+    ],
+    "title": "6ABOS: 6S-based Atmospheric Background Offset Subtraction",
+    "upload_type": "software",
+    "description": "6ABOS is a modular Python package for EnMAP atmospheric correction...",
+    "license": "GPL-3.0-or-later"
+}
