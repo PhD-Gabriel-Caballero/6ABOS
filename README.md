@@ -154,19 +154,22 @@ December 1–4, 2025 | Darmstadt, Germany.
 If you use this software in your research, please [cite](CITATION.cff) it as follows:
 
 **APA Format:**
-Caballero Cañas, G. R., Sòria-Perpinyà, X., Alvado Arranz, B., & Ruíz Verdú, A. (2025). 6ABOS: 6S-based Atmospheric Background Offset Subtraction Framework (Version 1.1.0) [Computer software]. https://doi.org/10.5281/zenodo.18300277
+Caballero Cañas, G. R., Sòria Perpinyà, X., Alvado Arranz, B., & Ruiz-Verdú, A. (2026). 6ABOS: 6S-based Atmospheric Background Offset Subtraction v1.1.0 - Modular Architecture (v1.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.18300277
 
 **BibTeX:**
 ```bibtex
-@software{phd_gabriel_caballero_2026_18300277,
-  author       = {Caballero Cañas Gabriel Rodrigo, Sòria Perpinyà Xavier, Alvado Arranz Bárbara, Ruíz Verdú Antonio},
-  title        = {6ABOS: 6S-based Atmospheric Background Offset Subtraction Framework (Version 1.1.0)},
+@software{caballero_canas_2026_18300277,
+  author       = {Caballero Cañas, Gabriel Rodrigo and 
+                  Sòria Perpinyà, Xavier and 
+                  Alvado Arranz, Bárbara and 
+                  Ruiz-Verdú, Antonio},
+  title        = {{6ABOS: 6S-based Atmospheric Background Offset Subtraction v1.1.0 - Modular Architecture}},
   month        = jan,
   year         = 2026,
   publisher    = {Zenodo},
   version      = {v1.1.0},
   doi          = {10.5281/zenodo.18300277},
-  url          = {[https://doi.org/10.5281/zenodo.18300277](https://doi.org/10.5281/zenodo.18300277)}
+  url          = {https://doi.org/10.5281/zenodo.18300277}
 }
 ```
 ## License and Disclaimer
