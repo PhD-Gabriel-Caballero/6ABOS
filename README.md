@@ -85,7 +85,6 @@ conda activate sixabos_env
 
 # 3. Install the package in editable mode
 pip install -e .
-foo
 ```
 ## Changelog
 See [HISTORY.rst](https://github.com/PhD-Gabriel-Caballero/6ABOS/blob/main/HISTORY.rst) for a detailed list of changes and version evolution.
@@ -144,7 +143,6 @@ This software is provided "as is", without warranty of any kind, express or impl
 
 The user assumes all responsibility for the validation of results and the appropriate use of the atmospheric correction framework in their specific study area.
 
----
 ## Citation
 
 If you use this software in your research, please cite it as follows:
