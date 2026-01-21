@@ -18,9 +18,9 @@
 name: sixabos_env
 channels:
   - conda-forge
-  - defaults
+
 dependencies:
-  - python=3.9
+  - python>=3.10
   - py6s
   - numpy
   - pandas
@@ -29,5 +29,4 @@ dependencies:
   - matplotlib
   - scipy
   - pip
-  - pip:
-    - xmltodict
+  - xmltodict
