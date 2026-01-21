@@ -64,6 +64,16 @@ The correction effectively removes aerosol scattering and absorption effects, wh
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PhD-Gabriel-Caballero/6ABOS/blob/main/notebooks/EnMAP/6ABOS_EnMAP_AC_v1.2_Dic_2025.ipynb)
 
 ## Arquitectura del Software
+
+6ABOS is designed as a modular Python package, ensuring high interoperability with Earth Observation pipelines like EnPT. The architecture follows a decoupled functional design:
+
+* **Orchestration (`main.py`):** Acts as the entry point, handling configuration parsing and parallel execution management.
+* **Physics Engine (`core.py`):** Encapsulates the 6S Radiative Transfer Modeling (RTM) logic and the atmospheric correction physics.
+* **Data Retrieval (`atmospheric.py`):** A dedicated interface for Google Earth Engine (GEE) to fetch dynamic atmospheric parameters (NCEP/MODIS).
+* **Utility Layer (`utils.py`):** Handles EnMAP-specific I/O, XML metadata parsing, and GDAL-based raster processing.
+
+The framework utilizes a `ProcessPoolExecutor` to distribute the 242 EnMAP spectral bands across multiple CPU cores, significantly reducing processing time.
+
 ```mermaid
 classDiagram
     class run_6abos {
