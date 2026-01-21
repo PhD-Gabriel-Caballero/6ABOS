@@ -135,56 +135,6 @@ classDiagram
     run_single_6s_band --> Py6S_Library : calls RTM
     SixABOSEngine --> GDAL_Library : writes final TIF
 ```
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant U as Usuario / EnPT
-    participant M as main.py (run_6abos)
-    participant UT as utils.py (Parser)
-    participant A as atmospheric.py (GEE)
-    participant C as core.py (SixABOSEngine)
-    participant S as Py6S (RTM)
-    participant G as GDAL / Disco
-
-    U->>M: run_6abos(config_dict)
-    
-    rect rgb(240, 240, 240)
-    Note over M,UT: Fase 1: Extracción de Metadatos
-    M->>UT: parse_xml(METADATA.xml)
-    UT-->>M: scene_meta (Geometría, Fecha, Ángulos)
-    M->>UT: get_enmap_band_parameters()
-    UT-->>M: df_srf (Wavelengths, FWHM, Gains)
-    end
-
-    rect rgb(220, 235, 255)
-    Note over M,A: Fase 2: Caracterización Atmosférica
-    M->>A: initialize_gee()
-    M->>A: water/ozone/aerosol(geom, date)
-    A-->>M: H2O, O3, AOT (Valores reales)
-    end
-
-    rect rgb(230, 255, 230)
-    Note over M,S: Fase 3: Simulación Física (Paralela)
-    M->>C: prepare_rtm_tasks()
-    M->>M: ProcessPoolExecutor (Parallel)
-    loop Per Band (242 bands)
-        M->>S: simulate_physics(target_band)
-        S-->>M: LUT / Coeficientes (xa, xb, xc)
-    end
-    end
-
-    rect rgb(255, 245, 220)
-    Note over M,G: Fase 4: Corrección y Exportación
-    M->>C: apply_atmospheric_correction(Radiance)
-    C-->>M: Reflectance (L2A)
-    M->>UT: save_enmap_tiff(output_cube)
-    UT->>G: Write GeoTIFF with Metadata
-    end
-
-    M-->>U: Return Success (Path to L2A)
-```
-
 ## Installation & Environment Setup
 
 This project requires a specific environment to handle geospatial libraries (GDAL) and atmospheric physics simulations (Py6S). We recommend using **Miniforge** (a lightweight distribution of Mamba/Conda) for faster dependency resolution.
