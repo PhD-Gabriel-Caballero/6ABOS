@@ -63,6 +63,68 @@ The correction effectively removes aerosol scattering and absorption effects, wh
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PhD-Gabriel-Caballero/6ABOS/blob/main/notebooks/EnMAP/6ABOS_EnMAP_AC_v1.2_Dic_2025.ipynb)
 
+## Arquitectura del Software
+```mermaid
+classDiagram
+    class run_6abos {
+        <<Orchestrator>>
+        +user_config: dict
+        +execute_pipeline()
+    }
+
+    class DEFAULT_CONF {
+        <<Configuration>>
+        +GEE: bool
+        +aerosol_profile: str
+        +output_rrs: bool
+        +tgas_threshold: float
+    }
+
+    class SixABOSEngine {
+        <<Core Physics Engine>>
+        +conf: dict
+        +results_6s: dict
+        +earth_sun_d: float
+        +compute_earth_sun_distance(dt)
+        +prepare_rtm_tasks(scene_meta, df_srf)
+        +apply_atmospheric_correction(toa_rad, band_id)
+    }
+
+    class Atmospheric {
+        <<GEE Integration>>
+        +initialize_gee(project_id)
+        +water(geom, date)
+        +ozone(geom, date)
+        +aerosol(geom, date)
+    }
+
+    class Utils {
+        <<Helper Functions>>
+        +parse_xml(xml_path)
+        +get_enmap_band_parameters()
+        +calculate_gaussian_srf()
+        +save_enmap_tiff()
+    }
+
+    class run_single_6s_band {
+        <<Parallel Task>>
+        +simulate_physics(task_tuple)
+    }
+
+    %% Relationships
+    run_6abos ..> DEFAULT_CONF : clones & updates
+    run_6abos --> Utils : calls for metadata/IO
+    run_6abos --> Atmospheric : fetches H2O/O3/AOT
+    run_6abos --> SixABOSEngine : instantiates
+    
+    SixABOSEngine ..> run_single_6s_band : creates tasks for
+    
+    run_6abos ..> ProcessPoolExecutor : manages parallelism
+    ProcessPoolExecutor --> run_single_6s_band : executes
+    
+    run_single_6s_band --> Py6S_Library : calls RTM
+    SixABOSEngine --> GDAL_Library : writes final TIF
+```
 ## Installation & Environment Setup
 
 This project requires a specific environment to handle geospatial libraries (GDAL) and atmospheric physics simulations (Py6S). We recommend using **Miniforge** (a lightweight distribution of Mamba/Conda) for faster dependency resolution.
