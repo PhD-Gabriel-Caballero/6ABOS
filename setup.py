@@ -35,7 +35,7 @@ setup(
         "xmltodict",
         "py6s",
         "earthengine-api",
-        "gdal", 
+        #"gdal", 
     ],
     include_package_data=True,
 )
