@@ -1,3 +1,5 @@
+[![Py6S](https://img.shields.io/badge/Powered%20by-Py6S-blue.svg)](https://py6s.readthedocs.io/en/latest/)[![DOI](https://zenodo.org/badge/1130957972.svg)](https://doi.org/10.5281/zenodo.18232368)
+
 # 6ABOS: 6S-based Atmospheric Background Offset Subtraction
 
 6ABOS (6S-based Atmospheric Background Offset Subtraction) is an efficient atmospheric correction (AC) framework designed specifically for aquatic remote sensing. It leverages the 6S (Second Simulation of the Satellite Signal in the Solar Spectrum) radiative transfer model to retrieve accurate water surface reflectance from hyperspectral sensors, specifically validated for PRISMA and EnMAP imagery.
@@ -20,20 +22,22 @@ pip install sixabos
 6ABOS is designed to be used directly from the terminal. Once installed, the sixabos-run command is available:
 
 ## Basic processing
+```console
 sixabos-run --input "path/to/EnMAP_scene" --output "path/to/output_folder"
-
+```
 ### Processing with a specific aerosol profile
+```console
 sixabos-run --input "path/to/EnMAP_scene" --output "path/to/output_folder" --aerosol Maritime
-
+```
 ### Available Aerosol Profiles:
 Continental, Maritime, Urban, Desert, BiomassBurning.
 For a full list of arguments, run: sixabos-run --help
 
 ## Key Features
-** Physics-based: Built upon the robust 6S radiative transfer model version 1.1.
-** Aquatic Optimized: Specifically tuned for the weak water-leaving signal in inland water bodies.
-** Parallel Processing: Uses multi-core execution to process hyperspectral bands efficiently.
-** GEE Integration: Capable of fetching dynamic atmospheric parameters (NCEP/MODIS) via Google Earth Engine.
+* **Physics-based:** Built upon the robust 6S radiative transfer model version 1.1.
+* **Aquatic Optimized:** Specifically tuned for the weak water-leaving signal in inland water bodies.
+* **Parallel Processing:** Uses multi-core execution to process hyperspectral bands efficiently.
+* **GEE Integration:** Capable of fetching dynamic atmospheric parameters (NCEP/MODIS) via Google Earth Engine.
 
 ## Links & Documentation
 Full Documentation & Source Code: https://github.com/PhD-Gabriel-Caballero/6ABOS
