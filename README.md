@@ -148,7 +148,7 @@ Open your terminal (or Miniforge Prompt on Windows) and run the following comman
 
 ```console
 # 1. Clone the repository
-git clone [https://github.com/PhD-Gabriel-Caballero/6ABOS.git](https://github.com/PhD-Gabriel-Caballero/6ABOS.git)
+git clone https://github.com/PhD-Gabriel-Caballero/6ABOS.git
 cd 6ABOS
 
 # 2. Create the environment from the provided file
