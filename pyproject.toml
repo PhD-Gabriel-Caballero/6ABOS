@@ -27,7 +27,7 @@ authors = [
   { name="Gabriel Caballero", email="gcaba@uv.es" }, 
 ]
 description = "6S-based Atmospheric Background Offset Subtraction for EnMAP Atmospheric Correction"
-readme = "README.md"
+readme = "README_PYPI.md"
 requires-python = ">=3.10"
 license = {text = "GPL-3.0-or-later"}
 classifiers = [
