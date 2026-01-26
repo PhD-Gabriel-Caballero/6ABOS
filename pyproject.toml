@@ -44,7 +44,7 @@ dependencies = [
     "xmltodict",
     "Py6S>=1.5.3",
     "earthengine-api",
-    "gdal",  # Required for geospatial raster I/O
+    #"gdal",  # Required for geospatial raster I/O
     # Note: py6s and gdal are usually managed via conda-forge 
     # but are listed here for metadata completeness.
 ]
