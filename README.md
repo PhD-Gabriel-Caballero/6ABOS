@@ -160,7 +160,7 @@ pip install -e .
 ```
 ## Usage
 
-6ABOS v1.1.0 can be used either as a standalone command-line tool or as a Python library integrated into your workflows.
+6ABOS can be used either as a standalone command-line tool or as a Python library integrated into your workflows.
 
 ### 1. Command Line Interface (CLI)
 After installation, you can run the atmospheric correction from any terminal without opening a Python script. 
@@ -172,7 +172,7 @@ sixabos-run --input "path/to/EnMAP_scene" --output "path/to/output_folder"
 ### 2. Advanced options: 
 You can specify the aerosol profile if needed:
 ```console
-sixabos-run -input "path/to/EnMAP_scene" --output "path/to/output_folder" --aerosol maritime
+sixabos-run -input "path/to/EnMAP_scene" --output "path/to/output_folder" --aerosol Maritime
 ```
 Run ```sixabos-run --help``` to see all available arguments.
 
