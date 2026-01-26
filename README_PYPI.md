@@ -19,10 +19,10 @@ pip install sixabos
 
 6ABOS is designed to be used directly from the terminal. Once installed, the sixabos-run command is available:
 
-# Basic processing
+## Basic processing
 sixabos-run --input "path/to/EnMAP_scene" --output "path/to/output_folder"
 
-# Processing with a specific aerosol profile
+### Processing with a specific aerosol profile
 sixabos-run --input "path/to/EnMAP_scene" --output "path/to/output_folder" --aerosol Maritime
 
 ### Available Aerosol Profiles:
