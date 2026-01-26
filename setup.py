@@ -33,7 +33,7 @@ setup(
         "scipy",
         "matplotlib",
         "xmltodict",
-        "py6s",
+        # "py6s",
         "earthengine-api",
         # "gdal", 
     ],
