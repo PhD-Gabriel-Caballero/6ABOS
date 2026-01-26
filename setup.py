@@ -6,11 +6,11 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="s6abos",
+    name="sixabos",
     version="1.1.0",
     author="Gabriel Caballero",
-    author_email="gabriel.caballero@uv.es",  # Update if preferred
-    description="6S-based Atmospheric Background Offset Subtraction for EnMAP hyperspectral imagery",
+    author_email="gabriel.caballero@uv.es",  
+    description="6S-based Atmospheric Background Offset Subtraction for EnMAP hyperspectral imagery atmospheric correction",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/PhD-Gabriel-Caballero/6ABOS",
@@ -27,10 +27,9 @@ setup(
         "Intended Audience :: Science/Research",
         "Topic :: Scientific/Engineering :: Atmospheric Science",
     ],
-    # Enforcing Daniel's suggestion for modern Python
     python_requires=">=3.10",
     
-    # Core dependencies (moving xmltodict here as requested)
+    # Core dependencies
     install_requires=[
         "numpy",
         "scipy",
@@ -38,7 +37,7 @@ setup(
         "matplotlib",
         "xmltodict",
         "tqdm",
-        "gdal",  # Or 'pygdal' depending on your environment preference
+        "gdal", 
     ],
     
     # Automatically find the S6ABOS_package
