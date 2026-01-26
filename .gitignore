@@ -8,6 +8,7 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.DS_Store
 
 # === EnMAP & Geospatial Data ===
 # Ignore heavy satellite imagery and scene-specific metadata
