@@ -60,3 +60,4 @@ sixabos-run = "sixabos.main:run_6abos"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["sixabos*"]
