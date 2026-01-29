@@ -24,10 +24,11 @@ from .main import run_6abos
 from .core import SixABOSEngine
 from .config import DEFAULT_CONF
 
-__version__ = "1.1.3"
+__version__ = "1.1.4"
 __author__ = "Gabriel Caballero"
 
 
 print("--- [SYSTEM] 6ABOS Modules successfully hooked ---")
+
 
 
