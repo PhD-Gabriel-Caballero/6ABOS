@@ -23,7 +23,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="sixabos",
-    version="1.1.3",
+    version="1.1.4",
     author="Gabriel Caballero",
     author_email="gabriel.caballero@uv.es",
     description="6S-based Atmospheric Background Offset Subtraction",
