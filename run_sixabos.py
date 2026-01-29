@@ -22,54 +22,67 @@ Software package developed by UV"""
 
 import os
 import sys
-import glob
+import argparse
 import traceback
 
-# Setup paths to include src directory
-current_dir = os.getcwd()
-sys.path.append(os.path.join(current_dir, "src"))
-
+# Setup paths to include src directory if running from source
+# This is a fallback in case the package is not yet installed in the environment
 try:
     from sixabos import main, utils
     print("--- [SYSTEM] 6ABOS Modules successfully hooked ---")
-except ImportError as e:
-    print(f"--- [ERROR] Module Hook Failed: {e} ---")
-    sys.exit()
-
-# Target paths
-
-# input_folder: Root directory containing the EnMAP L1C scene (XML and TIFF files)
-input_folder = r"C:\EnMAP_6S_AC\ENMAP01-____L1C-DT0000087385_20240731T112117Z_002_V010501_20241122T180323Z" # example 
-
-# output_folder: Destination for the corrected BOA (Bottom of Atmosphere) GeoTIFFs
-output_folder = r"C:\6ABOS_Results"
-
-# Ensure output directory exists
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
+except ImportError:
+    # If import fails, try to look into the 'src' folder relative to this script
+    sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
+    try:
+        from sixabos import main, utils
+    except ImportError as e:
+        print(f"--- [ERROR] Module Hook Failed: {e} ---")
+        sys.exit(1)
 
 def run_sixabos():
     """
-    Runs the full 6ABOS pipeline
+    Runs the full 6ABOS pipeline using command-line arguments
     """
+    # CLI Argument Parser setup
+    parser = argparse.ArgumentParser(description="6ABOS: Full-stack tool for CLMS vegetation monitoring")
+    
+    parser.add_argument("-i", "--input", help="Path to EnMAP L1C scene directory", required=False)
+    parser.add_argument("-o", "--output", help="Path to destination folder for results", required=False)
+    parser.add_argument("-p", "--project", help="Google Earth Engine Project ID", default="user-project-id")
+    parser.add_argument("--aerosol", help="Aerosol profile (Urban, Continental, etc.)", default="Urban")
+    
+    args = parser.parse_args()
+
+    # Path logic: Use arguments if provided, otherwise fallback to local default folders.
+    # This prevents hardcoded path errors on different operating systems (Linux/Mac/Windows).
+    input_folder = args.input if args.input else os.path.join(os.getcwd(), "input_sample")
+    output_folder = args.output if args.output else os.path.join(os.getcwd(), "6ABOS_Results")
+
+    # Ensure output directory exists (cross-platform compatible)
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder, exist_ok=True)
+
+    # Configuration dictionary for the main pipeline
     user_config = {
         'input_dir': input_folder,
         'output_dir': output_folder,
-        "aerosol_profile": 'Urban', # Options: 'Continental', 'Maritime', 'Urban', 'Desert', 'BiomassBurning'
+        'aerosol_profile': args.aerosol, 
         'GEE': False,
-        'GEE_project_id': "user-project-id", 
+        'GEE_project_id': args.project, 
         'verbose': True,
         'output_rrs': True,
-        "data_storing": False,
-        'data_plotting': True  # Enable the SRF and validation plots
+        'data_storing': False,
+        'data_plotting': True  
     }
 
     try:
         print("\n" + "="*60)
-        print("MAIN EXECUTION PHASE")
+        print(f"MAIN EXECUTION PHASE")
+        print(f"Input: {input_folder}")
+        print(f"Output: {output_folder}")
         print("="*60)
 
-        # Launch main process 
+        # Launch the core processing engine
         main.run_6abos(user_config)
 
         print("\n" + "="*60)
@@ -82,6 +95,7 @@ def run_sixabos():
         print(f" Message: {e}")
         print("!"*60)
         traceback.print_exc()
+        sys.exit(1)
 
 if __name__ == "__main__":
     run_sixabos()
