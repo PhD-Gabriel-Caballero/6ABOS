@@ -22,7 +22,7 @@ The objective of 6ABOS is to bridge the gap between complex RTMs and practical a
 * **Atmospheric Physics:** The atmospheric correction engine is powered by [Py6S](https://py6s.readthedocs.io/en/master/), employing a Homogeneous Lambertian + Water Lake ground reflectance model.
 
 ## Methodology
-6ABOS implements a atmospheric background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system leverages simulated atmospheric parameters to solve the radiative transfer equation, enabling the conversion of Top-of-Atmosphere (TOA) radiance into Bottom-of-Atmosphere (BOA) reflectance.
+6ABOS implements an atmospheric background offset subtraction framework. By modeling the atmospheric path radiance and solar irradiance through 6S, the system leverages simulated atmospheric parameters to solve the radiative transfer equation, enabling the conversion of Top-of-Atmosphere (TOA) radiance into Bottom-of-Atmosphere (BOA) reflectance.
 
 ### Physics-based Retrieval
 The 6ABOS model treats the atmosphere as a series of filters and reflectors. The workflow implemented in this repository follows these steps:
