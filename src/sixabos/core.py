@@ -16,73 +16,89 @@
 # You should have received a copy of the GNU General Public License along
 # with this program. If not, see <https://www.gnu.org/licenses/>.
 
-""" 6ABOS: 6S-based Atmospheric Background Offset Subtraction Atmospheric Correction Framework
-Radiative Transfer Modeling (RTM) & Physics Engine.
-Software package developed by UV"""
+"""
+6ABOS: 6S-based Atmospheric Background Offset Subtraction Atmospheric Correction Framework
+Radiative Transfer Modeling (RTM) & Physics Engine for 6ABOS.
+Software package developed by UV
+"""
 
-import numpy as np
 import math
-from Py6S import SixS, AtmosProfile, AeroProfile, Geometry, Altitudes, Wavelength
+from datetime import datetime
+import numpy as np
+from Py6S import SixS, AtmosProfile, AeroProfile, Geometry, Altitudes, Wavelength, GroundReflectance
 
 def run_single_6s_band(task_tuple):
     """Core function for 6S simulation per spectral band."""
- 
     band_id, srf_values, scene_meta, conf = task_tuple
     try:
-        # Instantiate
         s = SixS()
+
+        # 1. Atmospheric profile
+        s.atmos_profile = AtmosProfile.UserWaterAndOzone(
+            scene_meta['sceneWV'], 
+            scene_meta['ozoneValue']
+        )
         
-        # Atmospheric profile
-        #s.atmos_profile = AtmosProfile.PredefinedType(AtmosProfile.MidlatitudeSummer)
-        s.atmos_profile = AtmosProfile.UserWaterAndOzone(scene_meta['sceneWV'], scene_meta['ozoneValue'])
-         
-        # Aerosol profile
-        aerosol_map = {
-        'Continental': AeroProfile.Continental,
-        'Maritime': AeroProfile.Maritime,
-        'Urban': AeroProfile.Urban,
-        'Desert': AeroProfile.Desert,
-        'BiomassBurning': AeroProfile.BiomassBurning
+        # 2. Aerosol profile mapping
+        aero_map = {
+            'Continental': AeroProfile.Continental,
+            'Maritime': AeroProfile.Maritime,
+            'Urban': AeroProfile.Urban,
+            'Desert': AeroProfile.Desert,
+            'BiomassBurning': AeroProfile.BiomassBurning
         }
         
-        # Get the profile from config, default to Continental if not found
         chosen_profile = conf.get('aerosol_profile', 'Continental')
-        
-        if conf.get('verbose', False): 
-            if str(band_id) == "1":
-                print(f"\n[*] 6S Engine Configuration:")
-                print(f"    - Aerosol Profile: {chosen_profile}")
-                print(f"[*] Starting parallel RTM simulation...\n")
-        
-        s.aero_profile = AeroProfile.PredefinedType(aerosol_map.get(chosen_profile, AeroProfile.Continental))
-       
-        #s.aero_profile = AeroProfile.Continental
+        s.aero_profile = AeroProfile.PredefinedType(
+            aero_map.get(chosen_profile, AeroProfile.Continental)
+        )
         s.aot550 = scene_meta['sceneAOT']
-                
-        # Earth-Sun-satellite geometry
         
-        # Geometries of view and illumination
+        # 3. Geometry (with date string protection)
         s.geometry = Geometry.User()
         dt = scene_meta['acquisition_date']
+        if isinstance(dt, str):
+            try:
+                dt = datetime.strptime(dt.strip(), '%Y-%m-%d')
+            except ValueError:
+                dt = datetime.fromisoformat(dt.replace('Z', '+00:00'))
+
         s.geometry.day, s.geometry.month = dt.day, dt.month
-        
         s.geometry.solar_z = 90 - scene_meta['sunElevationAngle']
         s.geometry.solar_a = scene_meta['sunAzimuthAngle']
         s.geometry.view_z = scene_meta['viewingZenithAngle']
         s.geometry.view_a = scene_meta['viewingAzimuthAngle']
         
-        # Altitudes
+        # 4. Altitudes
         s.altitudes = Altitudes()
         s.altitudes.set_sensor_satellite_level()
-        s.altitudes.set_target_custom_altitude(max(0, scene_meta['meanGroundElevation'] / 1000.0))
+        s.altitudes.set_target_custom_altitude(
+            max(0, scene_meta['meanGroundElevation'] / 1000.0)
+        )
         
-        # Ground Reflectance
-        #s.ground_reflectance = GroundReflectance.HomogeneousLambertian(GroundReflectance.LakeWater)
-        #s.ground_reflectance = GroundReflectance.HomogeneousLambertian(0.7) # A spectrally-constant reflectance
+        # 5. Ground Reflectance (Specific models for Water/Vegetation)
+        if conf.get('use_lake_water', False):
+            s.ground_reflectance = GroundReflectance.HomogeneousLambertian(
+                GroundReflectance.LakeWater
+            )
+        else:
+            s.ground_reflectance = GroundReflectance.HomogeneousLambertian(
+                GroundReflectance.GreenVegetation
+            )
+            
+        # 6. Wavelength (Spectral Response Function)
+        s.wavelength = Wavelength(
+            conf['min_wavelength']/1000.0, 
+            conf['max_wavelength']/1000.0, 
+            srf_values
+        )
         
-        s.wavelength = Wavelength(conf['min_wavelength']/1000.0, conf['max_wavelength']/1000.0, srf_values)
+        # 7. Execute 6S
         s.run()
-        
+
+        if not s.outputs:
+            return str(band_id), "Error: 6S execution returned no outputs"
+
         return str(band_id), {
             'spherical_albedo': s.outputs.spherical_albedo.total,
             'trans_ozone': s.outputs.transmittance_ozone.total,
@@ -95,29 +111,50 @@ def run_single_6s_band(task_tuple):
         return str(band_id), f"Error: {e}"
 
 class SixABOSEngine:
+    """Atmospheric Correction Engine implementing physical inversion."""
+    
     def __init__(self, config):
         self.conf = config
         self.results_6s = {}
         self.earth_sun_d = 1.0
 
     def compute_earth_sun_distance(self, dt):
-        """Calculates distance using the datetime object."""
+        """Calculates Earth-Sun distance based on Julian Day."""
+        if isinstance(dt, str):
+            try:
+                dt = datetime.strptime(dt.strip(), '%Y-%m-%d')
+            except ValueError:
+                dt = datetime.fromisoformat(dt.replace('Z', '+00:00'))
+        
         doy = dt.timetuple().tm_yday
         self.earth_sun_d = 1 - 0.01672 * math.cos(math.radians(0.9856 * (doy - 4)))
 
     def prepare_rtm_tasks(self, scene_meta, df_srf, conf):
+        """Generates list of tuples for parallel processing."""
         return [(bid, df_srf.loc[bid].values.tolist(), scene_meta, conf) for bid in df_srf.index]
 
     def apply_atmospheric_correction(self, toa_radiance, band_id):
+        """Applies physical inversion: L_toa -> BOA Reflectance."""
         p = self.results_6s.get(str(band_id))
-        if p is None or isinstance(p, str) or p['trans_gas'] <= self.conf['tgas_threshold']:
-            return np.full(toa_radiance.shape, np.nan)
         
+        # Check for valid results and gas transmittance thresholds
+        if p is None or isinstance(p, str) or p['trans_gas'] <= self.conf['tgas_threshold']:
+            return np.full(toa_radiance.shape, np.nan, dtype=np.float32)
+        
+        # 1. Earth-Sun distance correction and scale factor (1000.0)
         l_toa_corr = (toa_radiance * 1000.0) * (self.earth_sun_d**2)
+        
+        # 2. Complete Physical Inversion (Ozone and Spherical Albedo coupling)
         term = (l_toa_corr / p['trans_ozone']) - p['path_rad']
         denom = (p['solar_irr'] * p['trans_scat_up'] / np.pi) + (p['spherical_albedo'] * term)
+        
         p_boa = term / denom
         
-        if self.conf['output_rrs']:
+        # 3. Physical Clipping (Reflectance must be between 0 and 1.1)
+        p_boa = np.clip(p_boa, 0, 1.1)
+        
+        # 4. Output format (Remote Sensing Reflectance vs Surface Reflectance)
+        if self.conf.get('output_rrs', False):
             return (p_boa / np.pi).astype(np.float32)
+            
         return p_boa.astype(np.float32)
