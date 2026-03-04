@@ -24,7 +24,7 @@ from .main import run_6abos
 from .core import SixABOSEngine
 from .config import DEFAULT_CONF
 
-__version__ = "1.1.4"
+__version__ = "1.1.5"
 __author__ = "Gabriel Caballero"
 
 

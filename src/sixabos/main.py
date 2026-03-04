@@ -20,168 +20,132 @@
 Main processing orchestration module.
 Software package developed by UV"""
 
-import os, glob, time, numpy as np, matplotlib.pyplot as plt
-from datetime import datetime
+import os
+import glob
+import time
 import argparse
 import sys
-from osgeo import gdal
-from .config import DEFAULT_CONF
-from .utils import parse_xml, get_enmap_band_parameters, save_enmap_tiff, calculate_gaussian_srf, print_6s_inputs, plot_6abos_validation, plot_sensor_srf
-from .core import SixABOSEngine, run_single_6s_band
-from .atmospheric import Atmospheric
+from datetime import datetime
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
-gdal.UseExceptions()
+import numpy as np
+from osgeo import gdal
 
-def run_6abos(user_config=None):
-    """Executes the complete 6ABOS atmospheric correction pipeline."""
-    # Start with the Global Defaults
+from .config import DEFAULT_CONF
+from .utils import (
+    parse_xml, get_enmap_band_parameters, save_enmap_tiff, 
+    calculate_gaussian_srf, print_6s_inputs, plot_6abos_validation, 
+    plot_sensor_srf
+)
+from .core import SixABOSEngine, run_single_6s_band
+
+def run_6abos(user_conf=None):
+    """Main execution workflow for 6ABOS processing."""
     conf = DEFAULT_CONF.copy()
+    if user_conf:
+        conf.update(user_conf)
 
-    # Handle CLI if no dictionary was passed directly
-    if user_config is None:
-        parser = argparse.ArgumentParser(description="6ABOS Atmospheric Correction for EnMAP")
-        parser.add_argument("--input", type=str, help="Input folder containing EnMAP data")
-        parser.add_argument("--output", type=str, help="Output directory")
-        parser.add_argument("--aerosol", type=str, choices=['Continental', 'Maritime', 'Urban', 'Desert','BiomassBurning'], 
-                            help="Aerosol profile to use")
-        
-        # If no arguments are passed at all in the terminal
-        if len(sys.argv) == 1:
-            parser.print_help()
-            return
+    # CLI Argument Configuration
+    parser = argparse.ArgumentParser(description='6ABOS: 6S-based Atmospheric Background Offset Subtraction')
+    parser.add_argument('--input', type=str, help='Path to EnMAP L1C folder')
+    parser.add_argument('--output', type=str, help='Destination folder')
+    parser.add_argument('--tgas', type=float, help='Gas transmittance threshold', default=conf['tgas_threshold'])
+    parser.add_argument('--aerosol', type=str, choices=['Continental', 'Maritime', 'Urban', 'Desert', 'BiomassBurning'], 
+                        help='Aerosol profile', default=conf['aerosol_profile'])
+    parser.add_argument('--lakewater', action='store_true', help='Use LakeWater reflectance model in 6S')
+    
+    args = parser.parse_args()
 
-        args = parser.parse_args()
-        
-        # Update conf with CLI arguments (only if they were actually provided)
-        if args.input: conf['input_dir'] = args.input
-        if args.output: conf['output_dir'] = args.output
-        if args.aerosol: conf['aerosol_profile'] = args.aerosol
-        
-    else:
-        # Handle Direct Dictionary call (from run_sixabos.py)
-        conf.update(user_config)
-        
-    # Check if input_dir exists and is not None
-    if not conf.get('input_dir') or not os.path.isdir(conf['input_dir']):
-        print(f"[!] Error: Invalid or missing input directory: {conf.get('input_dir')}")
-        print("[*] Please provide a valid path to the EnMAP L1C folder.")
+    # Update configuration from CLI
+    if args.input: conf['input_dir'] = args.input
+    if args.output: conf['output_dir'] = args.output
+    conf['tgas_threshold'] = args.tgas
+    conf['aerosol_profile'] = args.aerosol
+    conf['use_lake_water'] = args.lakewater 
+    
+    print(f"\n{'='*60}\n 6ABOS Atmospheric Correction Framework \n{'='*60}")
+    
+    # 1. Path Discovery for TIF and Metadata
+    try:
+        toa_path = glob.glob(os.path.join(conf['input_dir'], '*SPECTRAL_IMAGE.TIF'))[0]
+        xml_path = glob.glob(os.path.join(conf['input_dir'], '*METADATA.XML'))[0]
+    except (IndexError, TypeError):
+        print(f"[ERROR] EnMAP L1C files not found at: {conf.get('input_dir')}")
+        print("Please use the --input flag with the correct path.")
         return
 
-    # If output_dir is None or empty, create a default '6ABOS_Results' folder inside input_dir
-    if not conf.get('output_dir'):
-        conf['output_dir'] = os.path.join(conf['input_dir'], "6ABOS_Results")
-        print(f"[*] No output directory specified. Using default: {conf['output_dir']}")
-
-    # Ensure the output directory physically exists on disk
-    if not os.path.exists(conf['output_dir']):
-        os.makedirs(conf['output_dir'], exist_ok=True)
-        print(f"[*] Created output directory: {conf['output_dir']}")
-    
-    # Metadata extraction & Date fix
-    xml_path = glob.glob(os.path.join(conf['input_dir'], "*METADATA.XML"))[0]
-    toa_path = glob.glob(os.path.join(conf['input_dir'], "*SPECTRAL_IMAGE.TIF"))[0]
-    
-    if conf.get('verbose'):
-        print(f"[*] Path to TOA radiance: {toa_path}\n")
-
+    # 2. Parsing Metadata and Band Parameters
     scene_meta = parse_xml(xml_path, conf)
-    
-    if isinstance(scene_meta['acquisition_date'], str):
-        raw_date = scene_meta['acquisition_date'][:10]
-        scene_meta['acquisition_date'] = datetime.strptime(raw_date, '%Y-%m-%d')
-    
     spectral_conf = get_enmap_band_parameters(xml_path, conf)
     
-    # GEE Integration (Water, Ozone, Aerosol)
-    if conf.get('GEE', False):
-        pid = conf.get('GEE_project_id') 
-        if Atmospheric.initialize_gee(pid):
-            try:
-                import ee
-                geom = ee.Geometry.Point([scene_meta['scene_center_long'], scene_meta['scene_center_lat']])
-                date = ee.Date(scene_meta['startTime'])
-                
-                print("[GEE] Fetching atmospheric data (NCEP/TOMS/MODIS)...")
-                scene_meta['sceneWV'] = Atmospheric.water(geom, date).getInfo()
-                scene_meta['ozoneValue'] = Atmospheric.ozone(geom, date).getInfo()
-                scene_meta['sceneAOT'] = Atmospheric.aerosol(geom, date).getInfo()
-            except Exception as e:
-                print(f"[GEE WARNING] Cloud fetch failed: {e}. Using XML defaults.")
-
-    # Engine Setup
+    # 3. Atmospheric Correction Engine Initialization
     engine = SixABOSEngine(conf)
     engine.compute_earth_sun_distance(scene_meta['acquisition_date'])
-    
-    if conf.get('verbose'):
-        print_6s_inputs(scene_meta, engine, conf)
 
-    # Spectral Response Functions
-    df_srf = calculate_gaussian_srf(spectral_conf, np.arange(conf['min_wavelength'], conf['max_wavelength'], conf['wavelength_step']))
-    
-    # SRF visualization 
-    if conf.get('data_plotting'):
-        plot_sensor_srf(df_srf, conf)
-    
+    # 4. Sensor Spectral Response Function (SRF) Calculation
+    print("[*] Calculating Sensor Spectral Response Functions (SRF)...")
+    wavelength_range = np.arange(conf['min_wavelength'], conf['max_wavelength'], conf['wavelength_step'])
+    df_srf = calculate_gaussian_srf(spectral_conf, wavelength_range)
+
+    # 5. Parallel 6S RTM Execution
+    print(f"[*] Launching 6S RTM simulations (Parallel Engine)...")
     tasks = engine.prepare_rtm_tasks(scene_meta, df_srf, conf)
-    
-    # Parallel 6S Radiative Transfer Modelling 
     total_rtm = len(tasks)
     start_time_rtm = time.time()
-    print(f"[RTM] Simulating {total_rtm} bands in parallel...")
     
-    with ProcessPoolExecutor() as executor:
+    # CPU Management: reserving one core for system stability
+    max_workers = max(1, os.cpu_count() - 1)
+    print(f"    -> Using {max_workers} workers for {total_rtm} bands.")
+
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        # Submit all RTM tasks
         futures = {executor.submit(run_single_6s_band, t): t[0] for t in tasks}
+        
+        # Process results as they complete to update progress feedback
         for i, future in enumerate(as_completed(futures), 1):
+            bid, res = future.result()
+            engine.results_6s[bid] = res
+            
+            # Progress bar and ETA calculation
             elapsed = time.time() - start_time_rtm
             avg_time = elapsed / i
             remaining = avg_time * (total_rtm - i)
             pct = (i / total_rtm) * 100
-            bar = '=' * int(pct/2) + '>' + '-' * (50 - int(pct/2))
-            print(f'\r    Progress: [{bar:51}] {pct:.1f}% | ETA: {remaining:.0f}s ', end='', flush=True)
-            bid, res = future.result()
-            engine.results_6s[bid] = res
+            
+            bar_len = 40
+            filled = int(bar_len * i // total_rtm)
+            bar = '=' * filled + '>' + '-' * (bar_len - filled)
+            
+            print(f'\r    Progress: [{bar}] {pct:.1f}% | Band {bid} done | ETA: {remaining:.0f}s ', end='', flush=True)
 
-    # Atmospheric Correction  
-    print(f"\n\n[*] Applying atmospheric correction to image cube...")
+    print(f"\n[*] 6S simulations finished in {time.time() - start_time_rtm:.1f} seconds.")
+
+    # 6. Surface Reflectance Inversion (Spatial Processing)
     ds = gdal.Open(toa_path)
+    rows, cols = ds.RasterYSize, ds.RasterXSize
     num_bands = ds.RasterCount
-    output_cube = np.empty((num_bands, ds.RasterYSize, ds.RasterXSize), dtype=np.float32)
-    toa_cube = np.empty((num_bands, ds.RasterYSize, ds.RasterXSize), dtype=np.float32)
+    
+    output_cube = np.zeros((num_bands, rows, cols), dtype=np.float32)
 
+    print(f"[*] Applying physical inversion to {num_bands} bands...")
     for i in range(1, num_bands + 1):
-        # Counter every 20 bands
-        if i % 20 == 0 or i == num_bands:
+        if i % 50 == 0 or i == num_bands:
             print(f"    -> Processing Band {i}/{num_bands}")
             
         band_meta = spectral_conf.iloc[i-1]
+        # Radiometric calibration (Applying gain/offset to raw data)
         rad = ds.GetRasterBand(i).ReadAsArray() * band_meta['gain'] + band_meta['offset']
-        toa_cube[i-1] = rad
         output_cube[i-1] = engine.apply_atmospheric_correction(rad, i)
 
-    # Export
+    # 7. Final Export to Geotiff
     if conf.get('data_storing'):
-        folder_name = os.path.basename(os.path.normpath(conf['input_dir'])) # Get input folder name
-        
-        # Determine suffix based on rrs parameter
-        suffix = "-rrs-6abos.tif" if conf.get('output_rrs') else "-pboa-6abos.tif"
+        folder_name = os.path.basename(os.path.normpath(conf['input_dir']))
+        suffix = "-6abos-corrected.tif"
         file_name = f"{folder_name}{suffix}"
-        
         out_path = os.path.join(conf['output_dir'] or conf['input_dir'], file_name)
         
-        print(f"\n[*] GDAL is processing and writing the output Geotiff...")
         save_enmap_tiff(output_cube, out_path, toa_path, spectral_conf)
-        print(f"\n[OK] Processing complete. Output: {out_path}")
-        
-    # Plotting spectra for validation
-    if conf.get('data_plotting'):
-        print("[*] Generating validation spectral plot...")
-        plot_6abos_validation(toa_cube, output_cube, spectral_conf, conf)
-        
-        print("\n" + "="*60)
-        print(" PROCESS FINISHED SUCCESSFULLY")
-        print(" The plot window is now active.")
-        print(" PLEASE PRESS 'ENTER' IN THIS CONSOLE TO CLOSE THE PROGRAM.")
-        print("="*60)
-        
-        input()
+        print(f"\n[OK] Processing complete. Output file: {out_path}")
+
+if __name__ == "__main__":
+    run_6abos()

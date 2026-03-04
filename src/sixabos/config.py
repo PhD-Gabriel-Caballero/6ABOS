@@ -30,6 +30,7 @@ DEFAULT_CONF = {
     "min_wavelength": 379,              # minimum wavelength for EnMAP
     "wavelength_step": 2.5,             # Py6S wavelength step
     "aerosol_profile": 'Continental',   # Options: 'Continental', 'Maritime', 'Urban', 'Desert', 'BiomassBurning'
+    "use_lake_water": False,            # Default to False (Standard Lambertian 0.1)
     "tgas_threshold": 0.75,             # Mask pixels with low gas transmittance
     "input_dir": None,                  # Path to EnMAP L1C folder
     "output_dir": None,                 # Destination folder
