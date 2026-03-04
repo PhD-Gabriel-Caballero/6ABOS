@@ -3,18 +3,18 @@ History
 =======
 1.1.5 (2026-03-04)
 ------------------
-### Added
+**Added**
 * **LakeWater Reflectance Model**: Se ha implementado soporte para superficies acuáticas. Los usuarios ahora pueden activar la física de dispersión específica para agua mediante el flag `--lakewater` en la CLI.
 * **Dynamic CLI Progress Bar**: Nueva barra de progreso en tiempo real que incluye el **ETA (Tiempo estimado de finalización)** y actualizaciones de estado por banda para el motor RTM.
 * **Physical Range Clipping**: Añadida una capa de recorte físico $[0, 1.1]$ a la salida de la inversión para eliminar ruido atmosférico (reflectancias negativas) en bandas de absorción, manteniendo el detalle en píxeles de alto brillo.
 * **Maritime Aerosol Logic**: Lógica interna para priorizar perfiles de aerosol tipo 'Maritime' cuando el modo LakeWater está activo, mejorando la consistencia física del modelo.
 
-### Changed
+**Changed**
 * **Refactored Core Engine**: Estandarización de nombres de variables y actualización de todos los *docstrings* al inglés siguiendo las normativas PEP 8.
 * **Improved Metadata Parsing**: Mejora en la gestión de objetos `datetime` en los metadatos XML de EnMAP, soportando ahora tanto cadenas ISO UTC como formatos de fecha estándar.
 * **Parallel Engine Optimization**: Refinamiento en la distribución de tareas del `ProcessPoolExecutor` para asegurar una utilización del 100% de los núcleos de CPU disponibles.
 
-### Fixed
+**Fixed**
 * Corregido un error donde valores extremadamente bajos de transmitancia de gas podían causar una división por cero en la fórmula de inversión.
 * Mejora en la precisión del cálculo de la distancia Tierra-Sol para corregir variaciones estacionales en la transferencia radiativa.
 
