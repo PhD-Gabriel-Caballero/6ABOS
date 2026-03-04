@@ -3,7 +3,20 @@ History
 =======
 1.1.5 (2026-03-04)
 ------------------
-AddedLakeWater Reflectance Model: New support for aquatic surfaces. Users can now enable specific water-scattering physics using the --lakewater CLI flag.Dynamic CLI Progress Bar: Implementation of a real-time progress tracker with ETA (Estimated Time of Arrival) and band-specific status updates for the RTM engine.Physical Range Clipping: Added a safety clipping layer $[0, 1.1]$ to the physical inversion output to prevent negative reflectance values while preserving specular highlights.Maritime Aerosol Logic: Added internal logic to prioritize Maritime aerosol profiles when LakeWater mode is active for better physical consistency.ChangedRefactored Core Engine: Standardized variable naming and updated all docstrings to English following PEP 8 guidelines.Improved Metadata Parsing: Enhanced datetime handling for EnMAP XML files to support both UTC ISO strings and standard date formats.Parallel Engine Optimization: Refined task distribution in ProcessPoolExecutor to ensure 100% CPU utilization across all available cores.FixedFixed a bug where very low gas transmittance values could cause a division by zero in the inversion formula.Corrected the Earth-Sun distance calculation to improve precision in seasonal radiative transfer.
+### Added
+* **LakeWater Reflectance Model**: Se ha implementado soporte para superficies acuáticas. Los usuarios ahora pueden activar la física de dispersión específica para agua mediante el flag `--lakewater` en la CLI.
+* **Dynamic CLI Progress Bar**: Nueva barra de progreso en tiempo real que incluye el **ETA (Tiempo estimado de finalización)** y actualizaciones de estado por banda para el motor RTM.
+* **Physical Range Clipping**: Añadida una capa de recorte físico $[0, 1.1]$ a la salida de la inversión para eliminar ruido atmosférico (reflectancias negativas) en bandas de absorción, manteniendo el detalle en píxeles de alto brillo.
+* **Maritime Aerosol Logic**: Lógica interna para priorizar perfiles de aerosol tipo 'Maritime' cuando el modo LakeWater está activo, mejorando la consistencia física del modelo.
+
+### Changed
+* **Refactored Core Engine**: Estandarización de nombres de variables y actualización de todos los *docstrings* al inglés siguiendo las normativas PEP 8.
+* **Improved Metadata Parsing**: Mejora en la gestión de objetos `datetime` en los metadatos XML de EnMAP, soportando ahora tanto cadenas ISO UTC como formatos de fecha estándar.
+* **Parallel Engine Optimization**: Refinamiento en la distribución de tareas del `ProcessPoolExecutor` para asegurar una utilización del 100% de los núcleos de CPU disponibles.
+
+### Fixed
+* Corregido un error donde valores extremadamente bajos de transmitancia de gas podían causar una división por cero en la fórmula de inversión.
+* Mejora en la precisión del cálculo de la distancia Tierra-Sol para corregir variaciones estacionales en la transferencia radiativa.
 
 1.1.0 (2026-01-19)
 ------------------
