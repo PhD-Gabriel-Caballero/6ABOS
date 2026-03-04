@@ -192,9 +192,9 @@ This work is supported by the **PROMETEO Program** of the **Generalitat Valencia
 ## Authors
 For inquiries regarding collaboration or implementation for specific water quality monitoring projects, please contact the contributors.
 * **Gabriel Caballero** - *Lead Developer/Algorithm Design* - [gabriel.caballero@uv.es](mailto:gabriel.caballero@uv.es)
-* **Xavier Sòria Perpinyà** - *Scientific Contributor/Field Data & Bio-optical Modeling* 
-* **Bárbara Alvado Arranz** - *Scientific Contributor/Field Data & Bio-optical Modeling*
-* **Antonio Ruíz Verdú** - *Scientific Contributor/Field Data & Bio-optical Modeling* 
+* **Xavier Sòria Perpinyà** - *Scientific Contributor* 
+* **Bárbara Alvado Arranz** - *Scientific Contributor*
+* **Antonio Ruíz Verdú** - *Scientific Contributor* 
 
 ## Keywords
 `Remote Sensing` `Hyperspectral` `EnMAP` `PRISMA` `Atmospheric Correction` `6S Model` `Water Quality` `Inland Waters`
