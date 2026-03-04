@@ -1,26 +1,27 @@
-cff-version: 1.1.0
+cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
-- family-names: "Caballero Cañas"
-  given-names: "Gabriel Rodrigo"
-  orcid: "https://orcid.org/0000-0003-2268-2674"
-  affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
-- family-names: "Sòria Perpinyà"
-  given-names: "Xavier"
-  orcid: "https://orcid.org/0000-0001-8080-5826"
-  affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
-- family-names: "Alvado Arranz"
-  given-names: "Bárbara"
-  orcid: "https://orcid.org/0000-0002-7304-2688"
-  affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
-- family-names: "Ruiz-Verdú"
-  given-names: "Antonio"
-  orcid: "https://orcid.org/0000-0001-6832-3496"
-  affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
+  - family-names: "Caballero Cañas"
+    given-names: "Gabriel Rodrigo"
+    orcid: "https://orcid.org/0000-0003-2268-2674"
+    affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
+  - family-names: "Sòria Perpinyà"
+    given-names: "Xavier"
+    orcid: "https://orcid.org/0000-0001-8080-5826"
+    affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
+  - family-names: "Alvado Arranz"
+    given-names: "Bárbara"
+    orcid: "https://orcid.org/0000-0002-7304-2688"
+    affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
+  - family-names: "Ruiz-Verdú"
+    given-names: "Antonio"
+    orcid: "https://orcid.org/0000-0001-6832-3496"
+    affiliation: "Image Processing Laboratory (IPL), Universitat de València, Spain"
 
 title: "6ABOS: 6S-based Atmospheric Background Offset Subtraction"
-version: 1.1.0
+version: 1.1.5
 doi: 10.5281/zenodo.18300277
-date-released: 2026-01-19
+date-released: 2026-03-04
 url: "https://github.com/PhD-Gabriel-Caballero/6ABOS"
+repository-code: "https://github.com/PhD-Gabriel-Caballero/6ABOS"
 license: GPL-3.0
