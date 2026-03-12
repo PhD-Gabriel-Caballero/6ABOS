@@ -226,6 +226,8 @@ December 1–4, 2025 | Darmstadt, Germany.
 If you use this software in your research, please [cite](CITATION.cff) it as follows:
 
 **APA Format:**
+Caballero Cañas, G., Alvado Arranz, B., Sòria-Perpinyà, X., Ruiz-Verdú, A., Delegido, J., & Moreno, J. (2026). *6ABOS: An Open-Source Atmospheric Correction Framework for the EnMAP Hyperspectral Mission Based on 6S*. arXiv. https://arxiv.org/abs/2603.10856
+
 Caballero Cañas, G. R., Sòria Perpinyà, X., Alvado Arranz, B., & Ruiz-Verdú, A. (2026). 6ABOS: 6S-based Atmospheric Background Offset Subtraction v1.1.0 - Modular Architecture (v1.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.18300277
 
 **BibTeX:**
