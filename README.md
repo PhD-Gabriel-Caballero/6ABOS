@@ -230,6 +230,16 @@ Caballero Cañas, G. R., Sòria Perpinyà, X., Alvado Arranz, B., & Ruiz-Verdú,
 
 **BibTeX:**
 ```bibtex
+@misc{cañas20266abosopensourceatmosphericcorrection,
+      title={6ABOS: An Open-Source Atmospheric Correction Framework for the EnMAP Hyperspectral Mission Based on 6S}, 
+      author={Gabriel Caballero Cañas and Bárbara Alvado Arranz and Xavier Sòria-Perpinyà and Antonio Ruiz-Verdú and Jesús Delegido and José Moreno},
+      year={2026},
+      eprint={2603.10856},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2603.10856}, 
+}
+
 @software{caballero_canas_2026_18300277,
   author       = {Caballero Cañas, Gabriel Rodrigo and 
                   Sòria Perpinyà, Xavier and 
